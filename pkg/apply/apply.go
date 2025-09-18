@@ -160,7 +160,20 @@ func (applier *Applier) Run() (err error) {
 	// Run the simulator
 	success := false
 	var result *simontype.SimulateResult
-	result, err = simulator.Simulate(clusterResource, selectedResourceList, simulator.WithSchedulerConfig(applier.schedulerConfig), simulator.WithKubeConfig(applier.cluster.KubeConfig), simulator.WithCustomConfig(applier.customConfig))
+	// fmt.Println("Before Scheduling, Print info")
+	// fmt.Println("clusterResource.Nodes:", clusterResource.Nodes)
+	// fmt.Println("clusterResource.Pods:", clusterResource.Pods)
+	// fmt.Println("selectedResourceList:", selectedResourceList)
+	// fmt.Println("applier.schedulerConfig:", applier.schedulerConfig)
+	// fmt.Println("applier.cluster.KubeConfig:", applier.cluster.KubeConfig)
+	// fmt.Println("applier.customConfig:", applier.customConfig)
+	result, err = simulator.Simulate(
+		clusterResource,
+		selectedResourceList,
+		simulator.WithSchedulerConfig(applier.schedulerConfig),
+		simulator.WithKubeConfig(applier.cluster.KubeConfig),
+		simulator.WithCustomConfig(applier.customConfig),
+	)
 	if err != nil {
 		return err
 	}
