@@ -7,6 +7,11 @@ BINARY_NAME=simon
 LINUX_BINARY_NAME=simon_linux
 DARWIN_BINARY_NAME=simon_darwin
 
+demo:
+	go run cmd/main.go apply --extended-resources "gpu" \
+                  -f example/test-cluster-config.yaml \
+                  -s example/test-scheduler-config.yaml
+
 all: build
 
 .PHONY: build
