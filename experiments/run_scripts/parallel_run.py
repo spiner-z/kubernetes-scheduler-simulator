@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 # 全局变量
 # SCRIPT_PATH = "experiments/run_scripts/run_scripts_0511.sh"  # 脚本文件路径
 SCRIPT_PATH = "experiments/run_scripts/run_scripts_1028.sh"
-MAX_PROCS = 8  # 最大并行进程数
+MAX_PROCS = 16  # 最大并行进程数
 
 def run_command(command):
     """执行每个命令"""
