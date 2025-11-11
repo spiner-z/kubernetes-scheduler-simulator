@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from utils import parse_workload_name, POLICY_ABBR_DICT
 
+POLICY_ABBR_DICT['06-FGD'] = 'DRIFT'
+POLICY_ABBR_DICT['05-BestFit'] = 'Eva'
+POLICY_ABBR_DICT['03-GpuClustering'] = 'BestFit'
+POLICY_ABBR_DICT['04-GpuPacking'] = 'MLaaS'
+
 TYPE='frag_ratio'
 PAPER_PLOT=True # False: Plot with thinner lines for Presentation
 SAVEFIG=False    # False: plt.show()
@@ -16,6 +21,12 @@ FIGNAME = "openb_%s.pdf"
 workload = 'openb_pod_list_default'
 
 matplotlib.rcdefaults()
+matplotlib.rcParams["font.family"] = [
+    "WenQuanYi Micro Hei", 
+    "WenQuanYi Zen Hei",
+    "sans-serif"
+]
+matplotlib.rcParams['axes.unicode_minus'] = False
 matplotlib.rcParams['pdf.fonttype'] = 42
 if PAPER_PLOT:
     matplotlib.rcParams.update({"font.size": 24}) # for 24 for (8,6), 16 for (4,3)
@@ -62,8 +73,8 @@ for type, file in FILEDICT.items():
     dfnp.sc_policy = dfnp.sc_policy.apply(lambda x: POLICY_ABBR_DICT.get(x, x))
     dfp_dict[type] = dfnp
 
-policy_keep = ['Random', 'DotProd', 'Clustering', 'Packing', 'BestFit', 'FGD']
-policy_keepr = ['FGD', 'BestFit', 'Packing', 'Clustering', 'DotProd', 'Random']
+policy_keep = ['Random', 'DotProd', 'BestFit', 'MLaaS', 'Eva', 'DRIFT']
+policy_keepr = ['DRIFT', 'Eva', 'MLaaS', 'BestFit', 'DotProd', 'Random']
 
 # ['alloc', 'frag_amount', 'frag_ratio']
 dfnp = dfp_dict[TYPE]
@@ -83,8 +94,8 @@ if TYPE=='frag_amount':
     plt.grid(linestyle='-.', alpha=0.8)
     plt.legend(ncol=3)
     # plt.ylabel('GPU Fragment (%)')
-    plt.ylabel('Frag / Total (%)')
-    plt.xlabel('Arrived workloads (in % of cluster GPU capacity)')
+    plt.ylabel('资源碎片 / 总资源量 (%)')
+    plt.xlabel('到达工作负载（占集群GPU容量百分比）')
     plt.xlim(0, None)
     plt.ylim(0, 20)
     # plt.title("%s" % (workload))
@@ -110,9 +121,9 @@ elif TYPE=='frag_ratio':
                 style_order=policy_keepr, palette=colors)
     plt.grid(linestyle='-.', alpha=0.8)
     plt.legend(ncol=3)
-    plt.xlabel('Arrived workloads (in % of cluster GPU capacity)')
+    plt.xlabel('到达工作负载（占集群GPU容量百分比）')
     # plt.ylabel('Fragment ratio (%)')
-    plt.ylabel('Frag Rate (%)')
+    plt.ylabel('碎片率 (%)')
     plt.xlim(0, None)
     plt.ylim(0, 105)
     # plt.title("%s" % (workload))

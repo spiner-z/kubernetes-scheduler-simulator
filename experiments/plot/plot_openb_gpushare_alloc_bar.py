@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from utils import parse_workload_name, POLICY_ABBR_DICT
 
+POLICY_ABBR_DICT['06-FGD'] = 'DRIFT'
+POLICY_ABBR_DICT['05-BestFit'] = 'Eva'
+POLICY_ABBR_DICT['03-GpuClustering'] = 'BestFit'
+POLICY_ABBR_DICT['04-GpuPacking'] = 'MLaaS'
+
 PAPER_PLOT=False # False: Plot with thinner lines for Presentation
 SAVEFIG=True     # False: plt.show()
 TUNE_RATIO = 1.3
@@ -67,7 +72,7 @@ for type, file in FILEDICT.items():
     dfnp.sc_policy = dfnp.sc_policy.apply(lambda x: POLICY_ABBR_DICT.get(x, x))
     dfp_dict[type] = dfnp
 
-policy_keep = ['FGD', 'BestFit', 'Packing', 'Clustering', 'DotProd', 'Random']
+policy_keep = ['DRIFT', 'Eva', 'MLaaS', 'BestFit', 'DotProd', 'Random']
 
 # ['alloc', 'frag_amount', 'frag_ratio']
 dfnp = dfp_dict['alloc']
