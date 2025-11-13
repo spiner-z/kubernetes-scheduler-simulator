@@ -6,6 +6,8 @@ metadata:
   annotations:
     alibabacloud.com/gpu-milli: "1000"
     alibabacloud.com/gpu-count: "2"
+    drift.scheduler/relative-creation-time: "120"
+    drift.scheduler/relative-duration: "300"
 spec:
     containers:
     - image: tensorflow:latest

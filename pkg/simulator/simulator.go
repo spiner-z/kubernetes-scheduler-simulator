@@ -1,12 +1,14 @@
 package simulator
 
 import (
+	"container/heap"
 	"context"
 	"encoding/json"
 	"fmt"
 	"math"
 	"math/rand"
 	"sort"
+	"strconv"
 	"sync"
 	"time"
 
@@ -62,6 +64,43 @@ type Simulator struct {
 	podTotalMilliGpuReq int64
 	nodeTotalMilliCpu   int64
 	nodeTotalMilliGpu   int64
+
+	// ===== 新增：长期调度时的利用率统计 =====
+	// 累计使用量 * 时间 (单位：mCPU * 秒, mGPU * 秒)
+	cpuUsageTime float64
+	gpuUsageTime float64
+
+	// 模拟时间范围
+	simulationStartTime time.Time
+	simulationEndTime   time.Time
+
+	absStartTime time.Time // 绝对时间起点
+}
+
+// ===== 新增：保存“正在运行的 pod + finishTime”的结构体和堆实现 =====
+// 运行中的 Pod 信息
+type runningPodInfo struct {
+	pod        *corev1.Pod
+	finishTime time.Time
+}
+
+// 以 finishTime 为键的最小堆
+type runningPodHeap []*runningPodInfo
+
+func (h runningPodHeap) Len() int           { return len(h) }
+func (h runningPodHeap) Less(i, j int) bool { return h[i].finishTime.Before(h[j].finishTime) }
+func (h runningPodHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *runningPodHeap) Push(x interface{}) {
+	*h = append(*h, x.(*runningPodInfo))
+}
+
+func (h *runningPodHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
 }
 
 // status captures reason why one pod fails to be scheduled
@@ -121,12 +160,16 @@ func New(opts ...Option) (Interface, error) {
 	sharedInformerFactory.Start(ctx.Done())
 	cache.WaitForCacheSync(ctx.Done(), scInformer.HasSynced)
 
+	// 2025-01-01 00:00:00 作为绝对时间起点
+	absStartTime := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+
 	sim := &Simulator{
 		client:          client,
 		informerFactory: sharedInformerFactory,
 		ctx:             ctx,
 		cancelFunc:      cancel,
 		customConfig:    options.customConfig,
+		absStartTime:    absStartTime,
 	}
 
 	// create a scheduler
@@ -287,6 +330,7 @@ func (sim *Simulator) deletePod(p *corev1.Pod) error {
 	if err := sim.client.CoreV1().Pods(p.Namespace).Delete(sim.ctx, p.Name, metav1.DeleteOptions{}); err != nil {
 		return fmt.Errorf("%s(%s): %s", simontype.DeletePodError, utils.GeneratePodKey(p), err.Error())
 	}
+	log.Infof("pod(%s) is released from node(%s)", utils.GeneratePodKey(pod), pod.Spec.NodeName)
 
 	// synchronization
 	sim.syncPodDelete(p.Namespace, p.Name, 500*time.Microsecond)
@@ -472,8 +516,135 @@ func (sim *Simulator) syncNodeCreate(name string, d time.Duration) {
 	time.Sleep(d) // sleep for a while to avoid event channel full
 }
 
-// syncClusterResourceList: 1) load Pods into creation and deletion events. 2) schedule and delete these existing Pods.
+// // syncClusterResourceList: 1) load Pods into creation and deletion events. 2) schedule and delete these existing Pods.
+// func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]simontype.UnscheduledPod, error) {
+// 	//sync node
+// 	sort.Slice(resourceList.Nodes, func(i, j int) bool {
+// 		return resourceList.Nodes[i].Name < resourceList.Nodes[j].Name
+// 	})
+// 	randomIndex := rand.Perm(len(resourceList.Nodes))
+// 	for i := 0; i < len(randomIndex); i++ {
+// 		idx := randomIndex[i]
+// 		resourceList.Nodes[i].Name = fmt.Sprintf("%04d-", idx) + resourceList.Nodes[i].Name
+// 	}
+// 	for i, item := range resourceList.Nodes {
+// 		log.Debugf("[%d] attempt to create node(%s)\n", i, item.Name)
+// 		if _, err := sim.client.CoreV1().Nodes().Create(sim.ctx, item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy node: %v", err)
+// 		}
+// 		sim.syncNodeCreate(item.Name, 1*time.Millisecond)
+// 	}
+
+// 	//sync pdb
+// 	for _, item := range resourceList.PodDisruptionBudgets {
+// 		if _, err := sim.client.PolicyV1beta1().PodDisruptionBudgets(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy PDB: %v", err)
+// 		}
+// 	}
+
+// 	//sync svc
+// 	for _, item := range resourceList.Services {
+// 		if _, err := sim.client.CoreV1().Services(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy service: %v", err)
+// 		}
+// 	}
+
+// 	//sync storage class
+// 	for _, item := range resourceList.StorageClasss {
+// 		if _, err := sim.client.StorageV1().StorageClasses().Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy storage class: %v", err)
+// 		}
+// 	}
+
+// 	//sync pvc
+// 	for _, item := range resourceList.PersistentVolumeClaims {
+// 		if _, err := sim.client.CoreV1().PersistentVolumeClaims(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy pvc: %v", err)
+// 		}
+// 	}
+
+// 	//sync rc
+// 	for _, item := range resourceList.ReplicationControllers {
+// 		if _, err := sim.client.CoreV1().ReplicationControllers(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy RC: %v", err)
+// 		}
+// 	}
+
+// 	//sync deployment
+// 	for _, item := range resourceList.Deployments {
+// 		if _, err := sim.client.AppsV1().Deployments(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy deployment: %v", err)
+// 		}
+// 	}
+
+// 	//sync rs
+// 	for _, item := range resourceList.ReplicaSets {
+// 		if _, err := sim.client.AppsV1().ReplicaSets(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy replica set: %v", err)
+// 		}
+// 	}
+
+// 	//sync statefulset
+// 	for _, item := range resourceList.StatefulSets {
+// 		if _, err := sim.client.AppsV1().StatefulSets(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy stateful set: %v", err)
+// 		}
+// 	}
+
+// 	//sync daemonset
+// 	for _, item := range resourceList.DaemonSets {
+// 		if _, err := sim.client.AppsV1().DaemonSets(item.Namespace).Create(context.TODO(), item, metav1.CreateOptions{}); err != nil {
+// 			return nil, fmt.Errorf("unable to copy daemon set: %v", err)
+// 		}
+// 	}
+
+// 	// sync pods
+// 	var podEvents []*corev1.Pod
+// 	for _, p := range resourceList.Pods {
+// 		// pod creation event
+// 		podCreate := p.DeepCopy()
+// 		delete(podCreate.Annotations, gpushareutils.DeletionTime)
+// 		podEvents = append(podEvents, podCreate)
+
+// 		// pod deletion event
+// 		deletionTime := gpushareutils.GetDeletionTimeFromPodAnnotation(p)
+// 		if deletionTime != nil {
+// 			podDelete := p.DeepCopy()
+// 			delete(podDelete.Annotations, gpushareutils.CreationTime)
+// 			podEvents = append(podEvents, podDelete)
+// 		}
+// 	}
+// 	// sort pod creation/deletion events according to timestamp
+// 	sort.SliceStable(podEvents, func(i, j int) bool {
+// 		// c: creation, d: deletion
+// 		ci, di := gpushareutils.GetCreationTimeFromPodAnnotation(podEvents[i]), gpushareutils.GetDeletionTimeFromPodAnnotation(podEvents[i])
+// 		cj, dj := gpushareutils.GetCreationTimeFromPodAnnotation(podEvents[j]), gpushareutils.GetDeletionTimeFromPodAnnotation(podEvents[j])
+
+// 		var ti time.Time
+// 		if ci != nil {
+// 			ti = *ci
+// 		} else if di != nil {
+// 			ti = *di
+// 		}
+
+// 		var tj time.Time
+// 		if cj != nil {
+// 			tj = *cj
+// 		} else if dj != nil {
+// 			tj = *dj
+// 		}
+
+// 		// undefined goes before all, see simulator.TestSortPodsByTimestamp
+// 		return ti.Before(tj)
+// 	})
+// 	failedPods := sim.SchedulePods(podEvents)
+
+// 	return failedPods, nil
+// }
+
+// timeDriven syncClusterResourceList
 func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]simontype.UnscheduledPod, error) {
+	// ==== 1. 同步 Node / PDB / Service / StorageClass / PVC / RC / Deployment / RS / StatefulSet / DaemonSet 部分保持不变 ====
 	//sync node
 	sort.Slice(resourceList.Nodes, func(i, j int) bool {
 		return resourceList.Nodes[i].Name < resourceList.Nodes[j].Name
@@ -554,46 +725,312 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 		}
 	}
 
-	// sync pods
-	var podEvents []*corev1.Pod
-	for _, p := range resourceList.Pods {
-		// pod creation event
-		podCreate := p.DeepCopy()
-		delete(podCreate.Annotations, gpushareutils.DeletionTime)
-		podEvents = append(podEvents, podCreate)
+	// ===========================
+	// 2. 针对 Pods 做长期调度
+	// ===========================
 
-		// pod deletion event
-		deletionTime := gpushareutils.GetDeletionTimeFromPodAnnotation(p)
-		if deletionTime != nil {
-			podDelete := p.DeepCopy()
-			delete(podDelete.Annotations, gpushareutils.CreationTime)
-			podEvents = append(podEvents, podDelete)
+	// 2.1 先把所有 Pod 作为“到达事件”列表，根据 CreationTime 排序
+	var arrivalPods []*corev1.Pod
+	for _, p := range resourceList.Pods {
+		pod := p.DeepCopy()
+		arrivalPods = append(arrivalPods, pod)
+	}
+
+	if len(arrivalPods) == 0 {
+		return nil, nil
+	}
+
+	sort.SliceStable(arrivalPods, func(i, j int) bool {
+		ti, okI := getPodRelativeCreationTime(arrivalPods[i], sim.absStartTime)
+		tj, okJ := getPodRelativeCreationTime(arrivalPods[j], sim.absStartTime)
+
+		switch {
+		case okI && okJ:
+			if ti.Equal(tj) {
+				// 时间相同按名字排一下，避免不确定顺序
+				return arrivalPods[i].Name < arrivalPods[j].Name
+			}
+			return ti.Before(tj)
+		case okI && !okJ:
+			// 有 CreationTime 的放前面
+			return true
+		case !okI && okJ:
+			return false
+		default:
+			// 都没有时间，就按名字
+			return arrivalPods[i].Name < arrivalPods[j].Name
+		}
+	})
+
+	// 2.2 确定模拟开始时间：所有 Pod RelativeCreationTime 的最小值（没有 CreationTime 的可以忽略）
+	var startTime time.Time
+	set := false
+	for _, p := range arrivalPods {
+		if t, ok := getPodRelativeCreationTime(p, sim.absStartTime); ok {
+			if !set || t.Before(startTime) {
+				startTime = t
+				set = true
+			}
 		}
 	}
-	// sort pod creation/deletion events according to timestamp
-	sort.SliceStable(podEvents, func(i, j int) bool {
-		// c: creation, d: deletion
-		ci, di := gpushareutils.GetCreationTimeFromPodAnnotation(podEvents[i]), gpushareutils.GetDeletionTimeFromPodAnnotation(podEvents[i])
-		cj, dj := gpushareutils.GetCreationTimeFromPodAnnotation(podEvents[j]), gpushareutils.GetDeletionTimeFromPodAnnotation(podEvents[j])
+	if !set {
+		// 没有任何 CreationTime，就用开始时间
+		startTime = sim.absStartTime
+	}
+	sim.simulationStartTime = startTime
+	currentTime := startTime
 
-		var ti time.Time
-		if ci != nil {
-			ti = *ci
-		} else if di != nil {
-			ti = *di
+	// 用于积分的“上一个时间点”
+	lastTime := currentTime
+
+	// 2.3 维护待调度 pending 队列、运行中的 running 堆
+	pending := make([]*corev1.Pod, 0)
+	h := &runningPodHeap{}
+	heap.Init(h)
+
+	// 到达事件索引
+	arrivalIdx := 0
+
+	var failedPods []simontype.UnscheduledPod
+
+	// 当前正在使用的资源（mCPU / mGPU）
+	var currentCpuUsed int64 = 0
+	var currentGpuUsed int64 = 0
+
+	// 如果 nodeTotalMilliCpu / nodeTotalMilliGpu 没有提前 Record，可在这里兜底算一下
+	if sim.nodeTotalMilliCpu == 0 || sim.nodeTotalMilliGpu == 0 {
+		nodes, err := sim.client.CoreV1().Nodes().List(sim.ctx, metav1.ListOptions{})
+		if err == nil {
+			for _, n := range nodes.Items {
+				// 这里根据 Node 注解 / capacity 计算，总之要和 RecordNodeTotalResource 一致
+				// 简单起见，可以调用原来的 RecordNodeTotalResource 一次，然后这里就不需要兜底
+				_ = n
+			}
+		}
+	}
+
+	// 2.4 事件循环：一直跑到没有新的到达，也没有运行中的 Pod
+	for {
+		// 找下一个到达时间
+		var nextArrivalTime *time.Time
+		for arrivalIdx < len(arrivalPods) {
+			if t, ok := getPodRelativeCreationTime(arrivalPods[arrivalIdx], sim.absStartTime); ok {
+				nextArrivalTime = &t
+				break
+			} else {
+				// 没 CreationTime 的，直接当作在 startTime 到达
+				tmp := startTime
+				nextArrivalTime = &tmp
+				break
+			}
 		}
 
-		var tj time.Time
-		if cj != nil {
-			tj = *cj
-		} else if dj != nil {
-			tj = *dj
+		// 找下一个完成时间
+		var nextFinishTime *time.Time
+		if h.Len() > 0 {
+			t := (*h)[0].finishTime
+			nextFinishTime = &t
 		}
 
-		// undefined goes before all, see simulator.TestSortPodsByTimestamp
-		return ti.Before(tj)
-	})
-	failedPods := sim.SchedulePods(podEvents)
+		if nextArrivalTime == nil && nextFinishTime == nil {
+			// 没有任何事件了，退出
+			break
+		}
+
+		// 决定下一个事件时间 & 类型
+		var nextTime time.Time
+		const (
+			eventArrival = 1
+			eventFinish  = 2
+		)
+		var eventType int
+
+		switch {
+		case nextArrivalTime != nil && nextFinishTime != nil:
+			if nextArrivalTime.Before(*nextFinishTime) || nextArrivalTime.Equal(*nextFinishTime) {
+				nextTime = *nextArrivalTime
+				eventType = eventArrival
+			} else {
+				nextTime = *nextFinishTime
+				eventType = eventFinish
+			}
+		case nextArrivalTime != nil:
+			nextTime = *nextArrivalTime
+			eventType = eventArrival
+		case nextFinishTime != nil:
+			nextTime = *nextFinishTime
+			eventType = eventFinish
+		}
+
+		if nextTime.Before(currentTime) {
+			nextTime = currentTime
+		}
+
+		// 2.4.1 先做资源使用积分：从 currentTime 积分到 nextTime
+		if nextTime.After(lastTime) {
+			intervalSec := nextTime.Sub(lastTime).Seconds()
+			if intervalSec > 0 {
+				sim.cpuUsageTime += float64(currentCpuUsed) * intervalSec
+				sim.gpuUsageTime += float64(currentGpuUsed) * intervalSec
+			}
+			lastTime = nextTime
+		}
+		currentTime = nextTime
+
+		// 2.4.2 处理事件本身
+		switch eventType {
+		case eventArrival:
+			// 把所有 CreationTime <= currentTime 的 Pod 加入 pending
+			for arrivalIdx < len(arrivalPods) {
+				p := arrivalPods[arrivalIdx]
+				t, ok := getPodRelativeCreationTime(p, sim.absStartTime)
+				if !ok {
+					t = startTime
+				}
+				if t.After(currentTime) {
+					break
+				}
+				// 这里不改 Pod 的 Annotation（保留 Creation / Duration），只是待调度队列
+				pending = append(pending, p)
+				arrivalIdx++
+			}
+
+		case eventFinish:
+			// 把所有 finishTime <= currentTime 的运行中 Pod 完成、删除、释放资源
+			for h.Len() > 0 {
+				top := (*h)[0]
+				if top.finishTime.After(currentTime) {
+					break
+				}
+				heap.Pop(h) // 把它弹出
+
+				// 统计释放资源
+				cpuReq, gpuReq := getPodResourceUsage(top.pod)
+				currentCpuUsed -= cpuReq
+				currentGpuUsed -= gpuReq
+
+				log.Infof("time=%s: pod(%s/%s) finished, cpu=%d, total gpumilli=%d",
+					currentTime.Format(time.RFC3339), top.pod.Namespace, top.pod.Name, cpuReq, gpuReq)
+
+				if err := sim.deletePod(top.pod); err != nil {
+					log.Errorf("deletePod(%s) err: %v", utils.GeneratePodKey(top.pod), err)
+				}
+
+				//（可选）每次删除后输出一下碎片信息
+				// sim.ClusterGpuFragReport()
+			}
+		}
+
+		// 2.4.3 每次事件之后，尝试调度 pending 队列中的 Pod
+		if len(pending) > 0 {
+			newPending := make([]*corev1.Pod, 0, len(pending))
+
+			for _, p := range pending {
+				// 尝试调度
+				dur, _ := getPodRelativeDuration(p)
+				finishTime := currentTime.Add(dur)
+				log.Infof("time=%s: try to schedule pod(%s), duration=%s, finish=%s, cpu=%d, gpu=%d, gpumilli=%d",
+					currentTime.Format(time.RFC3339),
+					utils.GeneratePodKey(p),
+					dur.String(),
+					finishTime.Format(time.RFC3339),
+					utils.GetPodResource(p).MilliCpu,
+					utils.GetPodResource(p).GpuNumber,
+					utils.GetPodResource(p).MilliGpu,
+				)
+				unscheduled := sim.assumePod(p)
+
+				if unscheduled == nil {
+					// 调度成功，加入 running 堆
+					cpuReq, gpuReq := getPodResourceUsage(p)
+					currentCpuUsed += cpuReq
+					currentGpuUsed += gpuReq
+
+					heap.Push(h, &runningPodInfo{
+						pod:        p,
+						finishTime: finishTime,
+					})
+
+					//（可选）输出碎片
+					// sim.ClusterGpuFragReport()
+				} else {
+					// 调度失败：可能是暂时资源不够，也可能是永远不可能调度
+					// 暂时不判断“永远不可调度”，先保留在 pending，后面再统一处理
+					newPending = append(newPending, p)
+				}
+			}
+
+			pending = newPending
+		}
+
+		// 循环继续，直到没有 arrival / finish
+	}
+
+	sim.simulationEndTime = currentTime
+
+	// 2.5 处理仍然 pending 的 Pod：此时已经没有新的到达 & 没有运行中的 Pod
+	if len(pending) > 0 {
+		for _, p := range pending {
+			// 再尝试最后一次调度：如果此时集群空闲还调不进去，就当永远不可调度
+			log.Infof("time=%s: try to schedule pod(%s) again, cpu=%d, gpu=%d",
+				currentTime.Format(time.RFC3339),
+				utils.GeneratePodKey(p),
+				utils.GetPodResource(p).MilliCpu,
+				utils.GetPodResource(p).GpuNumber,
+			)
+			unscheduled := sim.assumePod(p)
+
+			if unscheduled != nil {
+				log.Warnf("pod(%s) still unschedulable at end of simulation", utils.GeneratePodKey(p))
+				failedPods = append(failedPods, *unscheduled)
+			} else {
+				// 理论上这种情况应该很少（最后一轮突然又能调度进去了），但我们也处理一下
+				cpuReq, gpuReq := getPodResourceUsage(p)
+				currentCpuUsed += cpuReq
+				currentGpuUsed += gpuReq
+
+				dur, _ := getPodRelativeDuration(p)
+				finishTime := currentTime.Add(dur)
+				heap.Push(h, &runningPodInfo{pod: p, finishTime: finishTime})
+			}
+		}
+	}
+
+	// 2.6 如果还有运行中的 Pod（极端情况），再补一轮 finish
+	for h.Len() > 0 {
+		top := heap.Pop(h).(*runningPodInfo)
+
+		// 积分到最后一个 finishTime
+		if top.finishTime.After(lastTime) {
+			intervalSec := top.finishTime.Sub(lastTime).Seconds()
+			sim.cpuUsageTime += float64(currentCpuUsed) * intervalSec
+			sim.gpuUsageTime += float64(currentGpuUsed) * intervalSec
+			lastTime = top.finishTime
+		}
+
+		cpuReq, gpuReq := getPodResourceUsage(top.pod)
+		currentCpuUsed -= cpuReq
+		currentGpuUsed -= gpuReq
+
+		if err := sim.deletePod(top.pod); err != nil {
+			log.Errorf("deletePod(%s) err: %v", utils.GeneratePodKey(top.pod), err)
+		}
+	}
+
+	sim.simulationEndTime = lastTime
+
+	// 2.7 计算平均利用率（CPU / GPU）
+	totalDurationSec := sim.simulationEndTime.Sub(sim.simulationStartTime).Seconds()
+	log.Infof("Simulation start at %s, finish at %s", sim.simulationStartTime, sim.simulationEndTime)
+	if totalDurationSec > 0 && sim.nodeTotalMilliCpu > 0 && sim.nodeTotalMilliGpu > 0 {
+		cpuUtil := sim.cpuUsageTime / (float64(sim.nodeTotalMilliCpu) * totalDurationSec) * 100
+		gpuUtil := sim.gpuUsageTime / (float64(sim.nodeTotalMilliGpu) * totalDurationSec) * 100
+		log.Infof("Long-term scheduling utilization: CPU=%.2f%%, GPU=%.2f%%, duration=%.2fs",
+			cpuUtil, gpuUtil, totalDurationSec)
+	} else {
+		log.Warnf("Long-term scheduling utilization: insufficient data (totalDurationSec=%.2f, cpu=%d, gpu=%d)",
+			totalDurationSec, sim.nodeTotalMilliCpu, sim.nodeTotalMilliGpu)
+	}
 
 	return failedPods, nil
 }
@@ -1136,4 +1573,44 @@ func (sim *Simulator) tuneUpPods(pods []*corev1.Pod, cfg v1alpha1.WorkloadTuning
 		}
 	}
 	return pods
+}
+
+func getPodRelativeCreationTime(pod *corev1.Pod, systemStartTime time.Time) (time.Time, bool) {
+	if pod.Annotations == nil {
+		return time.Time{}, false
+	}
+	if ts, ok := pod.Annotations[gpushareutils.RelativeCreationTime]; ok && ts != "" {
+		sec, err := strconv.ParseInt(ts, 10, 64)
+		if err != nil {
+			log.Errorf("getPodRelativeCreationTime: parse %s err: %v", ts, err)
+			return time.Time{}, false
+		}
+		return systemStartTime.Add(time.Duration(sec) * time.Second), true
+	}
+	return time.Time{}, false
+}
+
+func getPodRelativeDuration(pod *corev1.Pod) (time.Duration, bool) {
+	if pod.Annotations == nil {
+		return 0, false
+	}
+	if ds, ok := pod.Annotations[gpushareutils.RelativeDuration]; ok && ds != "" {
+		durSec, err := strconv.ParseInt(ds, 10, 64)
+		if err != nil {
+			log.Errorf("getPodRelativeDuration: parse %s err: %v", ds, err)
+			return 0, false
+		}
+		return time.Duration(durSec) * time.Second, true
+	}
+	return 0, false
+}
+
+// 获取 Pod 的资源请求（CPU / GPU）
+func getPodResourceUsage(pod *corev1.Pod) (cpuMilli int64, gpuMilli int64 /*, mem int64*/) {
+	res := utils.GetPodResource(pod)
+	cpuMilli = res.MilliCpu
+	gpuMilli = res.TotalMilliGpu()
+	// 如果 PodResource 有内存字段，比如 MilliMem：
+	// mem = res.MilliMem
+	return
 }

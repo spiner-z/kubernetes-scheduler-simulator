@@ -1,16 +1,18 @@
 package utils
 
 const (
-	ResourceName = "alibabacloud.com/gpu-milli"      // GPU milli, i.e., 1000 == 1 GPU, for pod only, node is 1000 by default
-	CountName    = "alibabacloud.com/gpu-count"      // GPU number request (or allocatable), for pod and node
-	DeviceIndex  = "alibabacloud.com/gpu-index"      // Exists when the pod are assigned/predefined to a GPU device
-	ModelName    = "alibabacloud.com/gpu-card-model" // GPU card model, for pod and node
-	AssumeTime   = "alibabacloud.com/assume-time"    // To retrieve the scheduling latency
-	CreationTime = "alibabacloud.com/creation-time"  // creation timestamp
-	DeletionTime = "alibabacloud.com/deletion-time"  // deletion timestamp
-	PodNsNameSep = "/"
-	DevIdSep     = "-"
-	MILLI        = 1000
+	ResourceName         = "alibabacloud.com/gpu-milli"             // GPU milli, i.e., 1000 == 1 GPU, for pod only, node is 1000 by default
+	CountName            = "alibabacloud.com/gpu-count"             // GPU number request (or allocatable), for pod and node
+	DeviceIndex          = "alibabacloud.com/gpu-index"             // Exists when the pod are assigned/predefined to a GPU device
+	ModelName            = "alibabacloud.com/gpu-card-model"        // GPU card model, for pod and node
+	AssumeTime           = "alibabacloud.com/assume-time"           // To retrieve the scheduling latency
+	CreationTime         = "alibabacloud.com/creation-time"         // creation timestamp
+	DeletionTime         = "alibabacloud.com/deletion-time"         // deletion timestamp
+	RelativeCreationTime = "drift.scheduler/relative-creation-time" // 相对创建时间，单位秒
+	RelativeDuration     = "drift.scheduler/relative-duration"      // 运行时长，单位秒
+	PodNsNameSep         = "/"
+	DevIdSep             = "-"
+	MILLI                = 1000
 
 	MaxSpecCpu  = 128000  // CPU MILLI
 	MaxSpecMem  = 1048576 // Mem MiB
