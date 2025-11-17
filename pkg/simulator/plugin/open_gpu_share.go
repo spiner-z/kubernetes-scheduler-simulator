@@ -82,6 +82,7 @@ func (plugin *GpuSharePlugin) Filter(ctx context.Context, state *framework.Cycle
 	//fmt.Printf("filter_gpu: pod %s/%s, nodeName %s\n", pod.Namespace, pod.Name, nodeInfo.Node().Name)
 	// Pass if the pod does not require GPU resources
 	if podGpuMilli := gpushareutils.GetGpuMilliFromPodAnnotation(pod); podGpuMilli <= 0 {
+		// log.Infof("filter node %s success\n", nodeInfo.Node().Name)
 		return framework.NewStatus(framework.Success)
 	}
 	node := nodeInfo.Node()
@@ -94,18 +95,21 @@ func (plugin *GpuSharePlugin) Filter(ctx context.Context, state *framework.Cycle
 	nodeGpuType := gpushareutils.GetGpuModelOfNode(node)
 	podGpuType := gpushareutils.GetGpuModelFromPodAnnotation(pod)
 	if utils.IsNodeAccessibleToPodByType(nodeGpuType, podGpuType) == false {
+		// log.Errorf("filter node %s failed due to GPU type mismatch\n", nodeInfo.Node().Name)
 		return framework.NewStatus(framework.Unschedulable, "Node:"+nodeInfo.Node().Name)
 	}
 
 	gpuNodeInfo, err := plugin.cache.GetGpuNodeInfo(node.Name)
 	if err != nil {
+		// log.Errorf("filter node %s failed due to error: %v\n", nodeInfo.Node().Name, err)
 		return framework.NewStatus(framework.Unschedulable, "Node:"+nodeInfo.Node().Name)
 	}
 	_, found := gpuNodeInfo.AllocateGpuId(pod)
 	if !found {
+		// log.Errorf("filter node %s failed due to insufficient GPU resource\n", nodeInfo.Node().Name)
 		return framework.NewStatus(framework.Unschedulable, "Node:"+nodeInfo.Node().Name)
 	}
-
+	// log.Infof("filter node %s success\n", nodeInfo.Node().Name)
 	return framework.NewStatus(framework.Success)
 }
 

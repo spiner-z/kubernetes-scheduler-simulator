@@ -309,6 +309,7 @@ func (sim *Simulator) createPod(p *corev1.Pod) error {
 		if pod.Spec.NodeName != "" {
 			sim.syncNodeUpdateOnPodCreate(pod.Spec.NodeName, pod, 2*time.Millisecond)
 			log.Infof("pod(%s) is scheduled to node(%s)\n", utils.GeneratePodKey(pod), pod.Spec.NodeName)
+			// sim.DisplayNodeResource()
 		}
 	} else {
 		log.Errorf("[createPod] pod(%s) not created, should not happen", utils.GeneratePodKey(p))
@@ -331,6 +332,7 @@ func (sim *Simulator) deletePod(p *corev1.Pod) error {
 		return fmt.Errorf("%s(%s): %s", simontype.DeletePodError, utils.GeneratePodKey(p), err.Error())
 	}
 	log.Infof("pod(%s) is released from node(%s)", utils.GeneratePodKey(pod), pod.Spec.NodeName)
+	// sim.DisplayNodeResource()
 
 	// synchronization
 	sim.syncPodDelete(p.Namespace, p.Name, 500*time.Microsecond)

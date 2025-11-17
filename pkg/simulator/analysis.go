@@ -157,6 +157,18 @@ func (sim *Simulator) ClusterAnalysis(tag string) (utils.FragAmount, []utils.Res
 	return clusterFragAmount, resourceSummaries
 }
 
+func (sim *Simulator) DisplayNodeResource() {
+	nodeStatus := sim.GetClusterNodeStatus()
+	sim.nodeResourceMap = utils.GetNodeResourceMap(nodeStatus)
+	log.Infof("========== Node Resource Status ==========")
+	for _, ns := range nodeStatus {
+		if nodeRes, ok := sim.nodeResourceMap[ns.Node.Name]; ok {
+			log.Infof("Node(%s): %s\n", nodeRes.NodeName, nodeRes.Repr())
+		}
+	}
+	log.Infoln("=========================================")
+}
+
 func (sim *Simulator) NodeGpuFragAmount(nodeRes simontype.NodeResource) utils.FragAmount {
 	if len(sim.typicalPods) <= 0 {
 		log.Errorf("Typical pods are not set.\n")

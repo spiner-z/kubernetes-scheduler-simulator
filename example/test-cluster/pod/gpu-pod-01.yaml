@@ -4,8 +4,10 @@ metadata:
   name: gpu-pod-01
   namespace: pai-gpu
   annotations:
-    drift.scheduler/relative-creation-time: "180"
-    drift.scheduler/relative-duration: "120"
+    alibabacloud.com/gpu-milli: "800"
+    alibabacloud.com/gpu-count: "1"
+  #   drift.scheduler/relative-creation-time: "180"
+  #   drift.scheduler/relative-duration: "120"
 spec:
     containers:
     - image: tensorflow:latest
