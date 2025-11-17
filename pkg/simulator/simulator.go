@@ -1591,18 +1591,19 @@ func getPodRelativeCreationTime(pod *corev1.Pod, systemStartTime time.Time) (tim
 }
 
 func getPodRelativeDuration(pod *corev1.Pod) (time.Duration, bool) {
+	defaultDuration := 3600 * time.Second // 默认 1 小时
 	if pod.Annotations == nil {
-		return 0, false
+		return defaultDuration, false
 	}
 	if ds, ok := pod.Annotations[gpushareutils.RelativeDuration]; ok && ds != "" {
 		durSec, err := strconv.ParseInt(ds, 10, 64)
 		if err != nil {
 			log.Errorf("getPodRelativeDuration: parse %s err: %v", ds, err)
-			return 0, false
+			return defaultDuration, false
 		}
 		return time.Duration(durSec) * time.Second, true
 	}
-	return 0, false
+	return defaultDuration, false
 }
 
 // 获取 Pod 的资源请求（CPU / GPU）
