@@ -331,8 +331,10 @@ func (sim *Simulator) deletePod(p *corev1.Pod) error {
 	if err := sim.client.CoreV1().Pods(p.Namespace).Delete(sim.ctx, p.Name, metav1.DeleteOptions{}); err != nil {
 		return fmt.Errorf("%s(%s): %s", simontype.DeletePodError, utils.GeneratePodKey(p), err.Error())
 	}
-	log.Infof("pod(%s) is released from node(%s)", utils.GeneratePodKey(pod), pod.Spec.NodeName)
-	// sim.DisplayNodeResource()
+	if nodeName != "" {
+		log.Infof("pod(%s) is released from node(%s)", utils.GeneratePodKey(pod), pod.Spec.NodeName)
+		// sim.DisplayNodeResource()
+	}
 
 	// synchronization
 	sim.syncPodDelete(p.Namespace, p.Name, 500*time.Microsecond)
