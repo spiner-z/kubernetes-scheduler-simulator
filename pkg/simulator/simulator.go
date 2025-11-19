@@ -74,7 +74,34 @@ type Simulator struct {
 	simulationStartTime time.Time
 	simulationEndTime   time.Time
 
-	absStartTime time.Time // 绝对时间起点
+	// 绝对时间起点
+	absStartTime time.Time
+
+	// 信息收集，用于日志记录
+	loggedInfo map[string][]string
+}
+
+const (
+	StageUtilizationLogging = "StageUtilization"
+)
+
+func (sim *Simulator) addLoggedInfo(tag, info string) {
+	if sim.loggedInfo == nil {
+		sim.loggedInfo = make(map[string][]string)
+	}
+	if sim.loggedInfo[tag] == nil {
+		sim.loggedInfo[tag] = []string{}
+	}
+	sim.loggedInfo[tag] = append(sim.loggedInfo[tag], info)
+}
+
+func (sim *Simulator) displayLoggedInfo() {
+	for tag, infoList := range sim.loggedInfo {
+		log.Infof("===== Logged Info: %s =====\n", tag)
+		for _, info := range infoList {
+			log.Infof("\t%s\n", info)
+		}
+	}
 }
 
 // ===== 新增：保存“正在运行的 pod + finishTime”的结构体和堆实现 =====
@@ -880,6 +907,7 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 			lastTime = nextTime
 		}
 		currentTime = nextTime
+		sim.addStageUtilizationReport(currentTime)
 
 		// 2.4.2 处理事件本身
 		switch eventType {
@@ -1036,7 +1064,19 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 			totalDurationSec, sim.nodeTotalMilliCpu, sim.nodeTotalMilliGpu)
 	}
 
+	sim.displayLoggedInfo()
+
 	return failedPods, nil
+}
+
+func (sim *Simulator) addStageUtilizationReport(currentTime time.Time) {
+	totalDurationSec := currentTime.Sub(sim.simulationStartTime).Seconds()
+	if totalDurationSec > 0 && sim.nodeTotalMilliCpu > 0 && sim.nodeTotalMilliGpu > 0 {
+		cpuUtil := sim.cpuUsageTime / (float64(sim.nodeTotalMilliCpu) * totalDurationSec) * 100
+		gpuUtil := sim.gpuUsageTime / (float64(sim.nodeTotalMilliGpu) * totalDurationSec) * 100
+		sim.addLoggedInfo(StageUtilizationLogging, fmt.Sprintf("CPU=%.2f%%, GPU=%.2f%%, duration=%.2fs",
+			cpuUtil, gpuUtil, totalDurationSec))
+	}
 }
 
 // WithKubeConfig sets kubeconfig for Simulator, the default value is ""
