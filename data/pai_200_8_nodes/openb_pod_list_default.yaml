@@ -6,7 +6,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '960'
     drift.scheduler/relative-duration: '12430'
-  name: pod-0-resnet18[0]-0
+  name: openb-pod-0000
   namespace: paib-gpu
 spec:
   containers:
@@ -33,7 +33,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '2438'
     drift.scheduler/relative-duration: '15276'
-  name: pod-1-sage[0]-1
+  name: openb-pod-0001
   namespace: paib-gpu
 spec:
   containers:
@@ -60,7 +60,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '2850'
     drift.scheduler/relative-duration: '2379'
-  name: pod-2-gcn[0]-2
+  name: openb-pod-0002
   namespace: paib-gpu
 spec:
   containers:
@@ -87,7 +87,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '3708'
     drift.scheduler/relative-duration: '34225'
-  name: pod-3-sage[0]-3
+  name: openb-pod-0003
   namespace: paib-gpu
 spec:
   containers:
@@ -114,7 +114,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '6390'
     drift.scheduler/relative-duration: '4262'
-  name: pod-4-resnet18[0]-4
+  name: openb-pod-0004
   namespace: paib-gpu
 spec:
   containers:
@@ -139,7 +139,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '9109'
     drift.scheduler/relative-duration: '177180'
-  name: pod-5-cyclegan[0]-5
+  name: openb-pod-0005
   namespace: paib-gpu
 spec:
   containers:
@@ -166,7 +166,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '9270'
     drift.scheduler/relative-duration: '179681'
-  name: pod-6-seq[0]-6
+  name: openb-pod-0006
   namespace: paib-gpu
 spec:
   containers:
@@ -193,7 +193,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '9549'
     drift.scheduler/relative-duration: '3192'
-  name: pod-7-resnet18[0]-7
+  name: openb-pod-0007
   namespace: paib-gpu
 spec:
   containers:
@@ -220,7 +220,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '9612'
     drift.scheduler/relative-duration: '38038'
-  name: pod-8-resnet18[0]-8
+  name: openb-pod-0008
   namespace: paib-gpu
 spec:
   containers:
@@ -247,7 +247,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '10310'
     drift.scheduler/relative-duration: '24548'
-  name: pod-9-resnet18[0]-9
+  name: openb-pod-0009
   namespace: paib-gpu
 spec:
   containers:
@@ -274,7 +274,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '10346'
     drift.scheduler/relative-duration: '2367'
-  name: pod-10-openfoam[0]-10
+  name: openb-pod-0010
   namespace: paib-gpu
 spec:
   containers:
@@ -301,7 +301,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '11078'
     drift.scheduler/relative-duration: '14615'
-  name: pod-11-sage[1]-11
+  name: openb-pod-0011
   namespace: paib-gpu
 spec:
   containers:
@@ -328,7 +328,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '12335'
     drift.scheduler/relative-duration: '2111'
-  name: pod-12-gcn[1]-12
+  name: openb-pod-0012
   namespace: paib-gpu
 spec:
   containers:
@@ -355,7 +355,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '12727'
     drift.scheduler/relative-duration: '178196'
-  name: pod-13-cyclegan[1]-13
+  name: openb-pod-0013
   namespace: paib-gpu
 spec:
   containers:
@@ -382,7 +382,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '14080'
     drift.scheduler/relative-duration: '39479'
-  name: pod-14-sage[2]-14
+  name: openb-pod-0014
   namespace: paib-gpu
 spec:
   containers:
@@ -409,7 +409,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '15153'
     drift.scheduler/relative-duration: '45687'
-  name: pod-15-openfoam[0]-15
+  name: openb-pod-0015
   namespace: paib-gpu
 spec:
   containers:
@@ -434,7 +434,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '15182'
     drift.scheduler/relative-duration: '30165'
-  name: pod-16-vit[0]-16
+  name: openb-pod-0016
   namespace: paib-gpu
 spec:
   containers:
@@ -461,7 +461,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '16164'
     drift.scheduler/relative-duration: '48032'
-  name: pod-17-seq[1]-17
+  name: openb-pod-0017
   namespace: paib-gpu
 spec:
   containers:
@@ -488,7 +488,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '16524'
     drift.scheduler/relative-duration: '75094'
-  name: pod-18-vit[1]-18
+  name: openb-pod-0018
   namespace: paib-gpu
 spec:
   containers:
@@ -515,7 +515,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '17168'
     drift.scheduler/relative-duration: '4014'
-  name: pod-19-vit[1]-19
+  name: openb-pod-0019
   namespace: paib-gpu
 spec:
   containers:
@@ -542,7 +542,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '17568'
     drift.scheduler/relative-duration: '163799'
-  name: pod-20-vit[1]-20
+  name: openb-pod-0020
   namespace: paib-gpu
 spec:
   containers:
@@ -569,7 +569,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '18985'
     drift.scheduler/relative-duration: '5366'
-  name: pod-21-cyclegan[2]-21
+  name: openb-pod-0021
   namespace: paib-gpu
 spec:
   containers:
@@ -596,7 +596,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '19682'
     drift.scheduler/relative-duration: '7193'
-  name: pod-22-gcn[0]-22
+  name: openb-pod-0022
   namespace: paib-gpu
 spec:
   containers:
@@ -623,7 +623,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '19887'
     drift.scheduler/relative-duration: '14314'
-  name: pod-23-openfoam[0]-23
+  name: openb-pod-0023
   namespace: paib-gpu
 spec:
   containers:
@@ -650,7 +650,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '20831'
     drift.scheduler/relative-duration: '43097'
-  name: pod-24-cyclegan[2]-24
+  name: openb-pod-0024
   namespace: paib-gpu
 spec:
   containers:
@@ -677,7 +677,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '22650'
     drift.scheduler/relative-duration: '46942'
-  name: pod-25-a3c[0]-25
+  name: openb-pod-0025
   namespace: paib-gpu
 spec:
   containers:
@@ -704,7 +704,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '23089'
     drift.scheduler/relative-duration: '587679'
-  name: pod-26-vit[2]-26
+  name: openb-pod-0026
   namespace: paib-gpu
 spec:
   containers:
@@ -731,7 +731,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '23390'
     drift.scheduler/relative-duration: '3332'
-  name: pod-27-a3c[0]-27
+  name: openb-pod-0027
   namespace: paib-gpu
 spec:
   containers:
@@ -758,7 +758,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '23979'
     drift.scheduler/relative-duration: '553075'
-  name: pod-28-cyclegan[2]-28
+  name: openb-pod-0028
   namespace: paib-gpu
 spec:
   containers:
@@ -785,7 +785,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '27285'
     drift.scheduler/relative-duration: '222463'
-  name: pod-29-a3c[0]-29
+  name: openb-pod-0029
   namespace: paib-gpu
 spec:
   containers:
@@ -812,7 +812,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '31760'
     drift.scheduler/relative-duration: '3934'
-  name: pod-30-a3c[0]-30
+  name: openb-pod-0030
   namespace: paib-gpu
 spec:
   containers:
@@ -839,7 +839,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '33099'
     drift.scheduler/relative-duration: '224741'
-  name: pod-31-sage[0]-31
+  name: openb-pod-0031
   namespace: paib-gpu
 spec:
   containers:
@@ -866,7 +866,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '35897'
     drift.scheduler/relative-duration: '2362'
-  name: pod-32-a3c[0]-32
+  name: openb-pod-0032
   namespace: paib-gpu
 spec:
   containers:
@@ -893,7 +893,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '38140'
     drift.scheduler/relative-duration: '586080'
-  name: pod-33-a3c[0]-33
+  name: openb-pod-0033
   namespace: paib-gpu
 spec:
   containers:
@@ -920,7 +920,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '38710'
     drift.scheduler/relative-duration: '30133'
-  name: pod-34-a3c[0]-34
+  name: openb-pod-0034
   namespace: paib-gpu
 spec:
   containers:
@@ -947,7 +947,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '38826'
     drift.scheduler/relative-duration: '3193'
-  name: pod-35-gpt2[0]-35
+  name: openb-pod-0035
   namespace: paib-gpu
 spec:
   containers:
@@ -974,7 +974,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '40097'
     drift.scheduler/relative-duration: '26998'
-  name: pod-36-cyclegan[2]-36
+  name: openb-pod-0036
   namespace: paib-gpu
 spec:
   containers:
@@ -1001,7 +1001,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '41077'
     drift.scheduler/relative-duration: '66426'
-  name: pod-37-vit[1]-37
+  name: openb-pod-0037
   namespace: paib-gpu
 spec:
   containers:
@@ -1028,7 +1028,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '41615'
     drift.scheduler/relative-duration: '2215'
-  name: pod-38-resnet18[1]-38
+  name: openb-pod-0038
   namespace: paib-gpu
 spec:
   containers:
@@ -1053,7 +1053,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '41921'
     drift.scheduler/relative-duration: '5950'
-  name: pod-39-openfoam[1]-39
+  name: openb-pod-0039
   namespace: paib-gpu
 spec:
   containers:
@@ -1078,7 +1078,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '42547'
     drift.scheduler/relative-duration: '573834'
-  name: pod-40-openfoam[1]-40
+  name: openb-pod-0040
   namespace: paib-gpu
 spec:
   containers:
@@ -1103,7 +1103,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '43307'
     drift.scheduler/relative-duration: '59691'
-  name: pod-41-openfoam[1]-41
+  name: openb-pod-0041
   namespace: paib-gpu
 spec:
   containers:
@@ -1130,7 +1130,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '43683'
     drift.scheduler/relative-duration: '2475'
-  name: pod-42-cyclegan[2]-42
+  name: openb-pod-0042
   namespace: paib-gpu
 spec:
   containers:
@@ -1157,7 +1157,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '44097'
     drift.scheduler/relative-duration: '2114'
-  name: pod-43-cyclegan[2]-43
+  name: openb-pod-0043
   namespace: paib-gpu
 spec:
   containers:
@@ -1184,7 +1184,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '44831'
     drift.scheduler/relative-duration: '7763'
-  name: pod-44-resnet18[0]-44
+  name: openb-pod-0044
   namespace: paib-gpu
 spec:
   containers:
@@ -1211,7 +1211,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '47195'
     drift.scheduler/relative-duration: '3254'
-  name: pod-45-vit[3]-45
+  name: openb-pod-0045
   namespace: paib-gpu
 spec:
   containers:
@@ -1238,7 +1238,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '48254'
     drift.scheduler/relative-duration: '38003'
-  name: pod-46-gpt2[1]-46
+  name: openb-pod-0046
   namespace: paib-gpu
 spec:
   containers:
@@ -1265,7 +1265,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '48654'
     drift.scheduler/relative-duration: '52016'
-  name: pod-47-cyclegan[1]-47
+  name: openb-pod-0047
   namespace: paib-gpu
 spec:
   containers:
@@ -1292,7 +1292,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '49045'
     drift.scheduler/relative-duration: '143199'
-  name: pod-48-cyclegan[3]-48
+  name: openb-pod-0048
   namespace: paib-gpu
 spec:
   containers:
@@ -1317,7 +1317,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '49773'
     drift.scheduler/relative-duration: '11435'
-  name: pod-49-openfoam[1]-49
+  name: openb-pod-0049
   namespace: paib-gpu
 spec:
   containers:
@@ -1344,7 +1344,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '50049'
     drift.scheduler/relative-duration: '14846'
-  name: pod-50-cyclegan[3]-50
+  name: openb-pod-0050
   namespace: paib-gpu
 spec:
   containers:
@@ -1371,7 +1371,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '50318'
     drift.scheduler/relative-duration: '16156'
-  name: pod-51-gcn[0]-51
+  name: openb-pod-0051
   namespace: paib-gpu
 spec:
   containers:
@@ -1398,7 +1398,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '51184'
     drift.scheduler/relative-duration: '192831'
-  name: pod-52-a3c[0]-52
+  name: openb-pod-0052
   namespace: paib-gpu
 spec:
   containers:
@@ -1425,7 +1425,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '51294'
     drift.scheduler/relative-duration: '22835'
-  name: pod-53-resnet18[0]-53
+  name: openb-pod-0053
   namespace: paib-gpu
 spec:
   containers:
@@ -1452,7 +1452,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '52087'
     drift.scheduler/relative-duration: '5367'
-  name: pod-54-cyclegan[4]-54
+  name: openb-pod-0054
   namespace: paib-gpu
 spec:
   containers:
@@ -1479,7 +1479,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '52626'
     drift.scheduler/relative-duration: '199195'
-  name: pod-55-cyclegan[4]-55
+  name: openb-pod-0055
   namespace: paib-gpu
 spec:
   containers:
@@ -1506,7 +1506,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '54102'
     drift.scheduler/relative-duration: '1973'
-  name: pod-56-sage[2]-56
+  name: openb-pod-0056
   namespace: paib-gpu
 spec:
   containers:
@@ -1533,7 +1533,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '55750'
     drift.scheduler/relative-duration: '14063'
-  name: pod-57-cyclegan[1]-57
+  name: openb-pod-0057
   namespace: paib-gpu
 spec:
   containers:
@@ -1560,7 +1560,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '57160'
     drift.scheduler/relative-duration: '15916'
-  name: pod-58-sage[2]-58
+  name: openb-pod-0058
   namespace: paib-gpu
 spec:
   containers:
@@ -1587,7 +1587,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '58562'
     drift.scheduler/relative-duration: '2334'
-  name: pod-59-a3c[0]-59
+  name: openb-pod-0059
   namespace: paib-gpu
 spec:
   containers:
@@ -1614,7 +1614,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '59124'
     drift.scheduler/relative-duration: '9495'
-  name: pod-60-vit[1]-60
+  name: openb-pod-0060
   namespace: paib-gpu
 spec:
   containers:
@@ -1641,7 +1641,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '60447'
     drift.scheduler/relative-duration: '6412'
-  name: pod-61-seq[1]-61
+  name: openb-pod-0061
   namespace: paib-gpu
 spec:
   containers:
@@ -1668,7 +1668,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '60946'
     drift.scheduler/relative-duration: '24277'
-  name: pod-62-cyclegan[2]-62
+  name: openb-pod-0062
   namespace: paib-gpu
 spec:
   containers:
@@ -1695,7 +1695,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '61966'
     drift.scheduler/relative-duration: '2338'
-  name: pod-63-vit[1]-63
+  name: openb-pod-0063
   namespace: paib-gpu
 spec:
   containers:
@@ -1722,7 +1722,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '62439'
     drift.scheduler/relative-duration: '52857'
-  name: pod-64-sage[3]-64
+  name: openb-pod-0064
   namespace: paib-gpu
 spec:
   containers:
@@ -1749,7 +1749,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '63146'
     drift.scheduler/relative-duration: '9175'
-  name: pod-65-cyclegan[3]-65
+  name: openb-pod-0065
   namespace: paib-gpu
 spec:
   containers:
@@ -1776,7 +1776,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '63222'
     drift.scheduler/relative-duration: '5730'
-  name: pod-66-cyclegan[3]-66
+  name: openb-pod-0066
   namespace: paib-gpu
 spec:
   containers:
@@ -1803,7 +1803,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '63556'
     drift.scheduler/relative-duration: '5586'
-  name: pod-67-cyclegan[3]-67
+  name: openb-pod-0067
   namespace: paib-gpu
 spec:
   containers:
@@ -1830,7 +1830,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '67830'
     drift.scheduler/relative-duration: '14845'
-  name: pod-68-vit[1]-68
+  name: openb-pod-0068
   namespace: paib-gpu
 spec:
   containers:
@@ -1857,7 +1857,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '68144'
     drift.scheduler/relative-duration: '6980'
-  name: pod-69-cyclegan[4]-69
+  name: openb-pod-0069
   namespace: paib-gpu
 spec:
   containers:
@@ -1884,7 +1884,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '69555'
     drift.scheduler/relative-duration: '2082'
-  name: pod-70-cyclegan[4]-70
+  name: openb-pod-0070
   namespace: paib-gpu
 spec:
   containers:
@@ -1911,7 +1911,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '70817'
     drift.scheduler/relative-duration: '24038'
-  name: pod-71-vit[1]-71
+  name: openb-pod-0071
   namespace: paib-gpu
 spec:
   containers:
@@ -1938,7 +1938,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '72361'
     drift.scheduler/relative-duration: '4092'
-  name: pod-72-vit[1]-72
+  name: openb-pod-0072
   namespace: paib-gpu
 spec:
   containers:
@@ -1965,7 +1965,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '73135'
     drift.scheduler/relative-duration: '103955'
-  name: pod-73-sage[4]-73
+  name: openb-pod-0073
   namespace: paib-gpu
 spec:
   containers:
@@ -1992,7 +1992,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '74224'
     drift.scheduler/relative-duration: '8531'
-  name: pod-74-gpt2[2]-74
+  name: openb-pod-0074
   namespace: paib-gpu
 spec:
   containers:
@@ -2019,7 +2019,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '74308'
     drift.scheduler/relative-duration: '2697'
-  name: pod-75-resnet18[0]-75
+  name: openb-pod-0075
   namespace: paib-gpu
 spec:
   containers:
@@ -2046,7 +2046,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '74398'
     drift.scheduler/relative-duration: '6008'
-  name: pod-76-vit[1]-76
+  name: openb-pod-0076
   namespace: paib-gpu
 spec:
   containers:
@@ -2073,7 +2073,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '74664'
     drift.scheduler/relative-duration: '164657'
-  name: pod-77-vit[1]-77
+  name: openb-pod-0077
   namespace: paib-gpu
 spec:
   containers:
@@ -2100,7 +2100,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '74862'
     drift.scheduler/relative-duration: '88600'
-  name: pod-78-cyclegan[4]-78
+  name: openb-pod-0078
   namespace: paib-gpu
 spec:
   containers:
@@ -2127,7 +2127,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '74988'
     drift.scheduler/relative-duration: '17926'
-  name: pod-79-cyclegan[4]-79
+  name: openb-pod-0079
   namespace: paib-gpu
 spec:
   containers:
@@ -2154,7 +2154,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '75155'
     drift.scheduler/relative-duration: '169532'
-  name: pod-80-cyclegan[2]-80
+  name: openb-pod-0080
   namespace: paib-gpu
 spec:
   containers:
@@ -2181,7 +2181,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '76122'
     drift.scheduler/relative-duration: '2880'
-  name: pod-81-cyclegan[2]-81
+  name: openb-pod-0081
   namespace: paib-gpu
 spec:
   containers:
@@ -2208,7 +2208,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '76371'
     drift.scheduler/relative-duration: '3667'
-  name: pod-82-vit[1]-82
+  name: openb-pod-0082
   namespace: paib-gpu
 spec:
   containers:
@@ -2235,7 +2235,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '80018'
     drift.scheduler/relative-duration: '413644'
-  name: pod-83-vit[1]-83
+  name: openb-pod-0083
   namespace: paib-gpu
 spec:
   containers:
@@ -2262,7 +2262,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '81391'
     drift.scheduler/relative-duration: '4966'
-  name: pod-84-gpt2[2]-84
+  name: openb-pod-0084
   namespace: paib-gpu
 spec:
   containers:
@@ -2289,7 +2289,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '82325'
     drift.scheduler/relative-duration: '263080'
-  name: pod-85-vit[1]-85
+  name: openb-pod-0085
   namespace: paib-gpu
 spec:
   containers:
@@ -2316,7 +2316,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '83799'
     drift.scheduler/relative-duration: '132872'
-  name: pod-86-sage[5]-86
+  name: openb-pod-0086
   namespace: paib-gpu
 spec:
   containers:
@@ -2343,7 +2343,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '84167'
     drift.scheduler/relative-duration: '5200'
-  name: pod-87-seq[1]-87
+  name: openb-pod-0087
   namespace: paib-gpu
 spec:
   containers:
@@ -2370,7 +2370,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '87303'
     drift.scheduler/relative-duration: '4840'
-  name: pod-88-vit[1]-88
+  name: openb-pod-0088
   namespace: paib-gpu
 spec:
   containers:
@@ -2397,7 +2397,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '89496'
     drift.scheduler/relative-duration: '8007'
-  name: pod-89-gcn[0]-89
+  name: openb-pod-0089
   namespace: paib-gpu
 spec:
   containers:
@@ -2424,7 +2424,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '91051'
     drift.scheduler/relative-duration: '7806'
-  name: pod-90-sage[6]-90
+  name: openb-pod-0090
   namespace: paib-gpu
 spec:
   containers:
@@ -2451,7 +2451,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '91836'
     drift.scheduler/relative-duration: '85930'
-  name: pod-91-cyclegan[2]-91
+  name: openb-pod-0091
   namespace: paib-gpu
 spec:
   containers:
@@ -2478,7 +2478,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '94051'
     drift.scheduler/relative-duration: '49323'
-  name: pod-92-cyclegan[2]-92
+  name: openb-pod-0092
   namespace: paib-gpu
 spec:
   containers:
@@ -2505,7 +2505,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '95690'
     drift.scheduler/relative-duration: '582190'
-  name: pod-93-vit[1]-93
+  name: openb-pod-0093
   namespace: paib-gpu
 spec:
   containers:
@@ -2532,7 +2532,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '96986'
     drift.scheduler/relative-duration: '50511'
-  name: pod-94-vit[1]-94
+  name: openb-pod-0094
   namespace: paib-gpu
 spec:
   containers:
@@ -2559,7 +2559,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '99930'
     drift.scheduler/relative-duration: '100055'
-  name: pod-95-vit[3]-95
+  name: openb-pod-0095
   namespace: paib-gpu
 spec:
   containers:
@@ -2586,7 +2586,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '101135'
     drift.scheduler/relative-duration: '34134'
-  name: pod-96-cyclegan[4]-96
+  name: openb-pod-0096
   namespace: paib-gpu
 spec:
   containers:
@@ -2613,7 +2613,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '101681'
     drift.scheduler/relative-duration: '11393'
-  name: pod-97-vit[1]-97
+  name: openb-pod-0097
   namespace: paib-gpu
 spec:
   containers:
@@ -2640,7 +2640,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '102647'
     drift.scheduler/relative-duration: '6162'
-  name: pod-98-cyclegan[4]-98
+  name: openb-pod-0098
   namespace: paib-gpu
 spec:
   containers:
@@ -2667,7 +2667,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '102909'
     drift.scheduler/relative-duration: '2400'
-  name: pod-99-vit[1]-99
+  name: openb-pod-0099
   namespace: paib-gpu
 spec:
   containers:
@@ -2694,7 +2694,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '103165'
     drift.scheduler/relative-duration: '5112'
-  name: pod-100-vit[1]-100
+  name: openb-pod-0100
   namespace: paib-gpu
 spec:
   containers:
@@ -2721,7 +2721,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '104718'
     drift.scheduler/relative-duration: '66562'
-  name: pod-101-cyclegan[4]-101
+  name: openb-pod-0101
   namespace: paib-gpu
 spec:
   containers:
@@ -2748,7 +2748,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '106562'
     drift.scheduler/relative-duration: '296385'
-  name: pod-102-cyclegan[1]-102
+  name: openb-pod-0102
   namespace: paib-gpu
 spec:
   containers:
@@ -2775,7 +2775,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '110857'
     drift.scheduler/relative-duration: '472844'
-  name: pod-103-vit[1]-103
+  name: openb-pod-0103
   namespace: paib-gpu
 spec:
   containers:
@@ -2802,7 +2802,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '113141'
     drift.scheduler/relative-duration: '226519'
-  name: pod-104-cyclegan[4]-104
+  name: openb-pod-0104
   namespace: paib-gpu
 spec:
   containers:
@@ -2829,7 +2829,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '114082'
     drift.scheduler/relative-duration: '24894'
-  name: pod-105-resnet18[0]-105
+  name: openb-pod-0105
   namespace: paib-gpu
 spec:
   containers:
@@ -2856,7 +2856,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '114195'
     drift.scheduler/relative-duration: '5345'
-  name: pod-106-sage[0]-106
+  name: openb-pod-0106
   namespace: paib-gpu
 spec:
   containers:
@@ -2883,7 +2883,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '115000'
     drift.scheduler/relative-duration: '11630'
-  name: pod-107-sage[6]-107
+  name: openb-pod-0107
   namespace: paib-gpu
 spec:
   containers:
@@ -2910,7 +2910,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '118157'
     drift.scheduler/relative-duration: '48608'
-  name: pod-108-sage[7]-108
+  name: openb-pod-0108
   namespace: paib-gpu
 spec:
   containers:
@@ -2937,7 +2937,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '120016'
     drift.scheduler/relative-duration: '6168'
-  name: pod-109-a3c[0]-109
+  name: openb-pod-0109
   namespace: paib-gpu
 spec:
   containers:
@@ -2964,7 +2964,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '120812'
     drift.scheduler/relative-duration: '37209'
-  name: pod-110-a3c[0]-110
+  name: openb-pod-0110
   namespace: paib-gpu
 spec:
   containers:
@@ -2991,7 +2991,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '121541'
     drift.scheduler/relative-duration: '28290'
-  name: pod-111-cyclegan[4]-111
+  name: openb-pod-0111
   namespace: paib-gpu
 spec:
   containers:
@@ -3018,7 +3018,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '121837'
     drift.scheduler/relative-duration: '3751'
-  name: pod-112-cyclegan[4]-112
+  name: openb-pod-0112
   namespace: paib-gpu
 spec:
   containers:
@@ -3045,7 +3045,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '122071'
     drift.scheduler/relative-duration: '31868'
-  name: pod-113-vit[1]-113
+  name: openb-pod-0113
   namespace: paib-gpu
 spec:
   containers:
@@ -3072,7 +3072,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '122162'
     drift.scheduler/relative-duration: '29218'
-  name: pod-114-a3c[0]-114
+  name: openb-pod-0114
   namespace: paib-gpu
 spec:
   containers:
@@ -3099,7 +3099,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '124837'
     drift.scheduler/relative-duration: '383886'
-  name: pod-115-openfoam[2]-115
+  name: openb-pod-0115
   namespace: paib-gpu
 spec:
   containers:
@@ -3126,7 +3126,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '126064'
     drift.scheduler/relative-duration: '61045'
-  name: pod-116-vit[1]-116
+  name: openb-pod-0116
   namespace: paib-gpu
 spec:
   containers:
@@ -3153,7 +3153,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '126250'
     drift.scheduler/relative-duration: '37323'
-  name: pod-117-cyclegan[2]-117
+  name: openb-pod-0117
   namespace: paib-gpu
 spec:
   containers:
@@ -3180,7 +3180,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '126891'
     drift.scheduler/relative-duration: '4844'
-  name: pod-118-cyclegan[2]-118
+  name: openb-pod-0118
   namespace: paib-gpu
 spec:
   containers:
@@ -3207,7 +3207,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '126952'
     drift.scheduler/relative-duration: '11723'
-  name: pod-119-resnet18[1]-119
+  name: openb-pod-0119
   namespace: paib-gpu
 spec:
   containers:
@@ -3234,7 +3234,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '127234'
     drift.scheduler/relative-duration: '9716'
-  name: pod-120-gcn[2]-120
+  name: openb-pod-0120
   namespace: paib-gpu
 spec:
   containers:
@@ -3261,7 +3261,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '128808'
     drift.scheduler/relative-duration: '1909'
-  name: pod-121-gcn[0]-121
+  name: openb-pod-0121
   namespace: paib-gpu
 spec:
   containers:
@@ -3288,7 +3288,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '130072'
     drift.scheduler/relative-duration: '2940'
-  name: pod-122-openfoam[3]-122
+  name: openb-pod-0122
   namespace: paib-gpu
 spec:
   containers:
@@ -3315,7 +3315,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '130854'
     drift.scheduler/relative-duration: '2403'
-  name: pod-123-gcn[2]-123
+  name: openb-pod-0123
   namespace: paib-gpu
 spec:
   containers:
@@ -3342,7 +3342,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '131240'
     drift.scheduler/relative-duration: '429141'
-  name: pod-124-a3c[0]-124
+  name: openb-pod-0124
   namespace: paib-gpu
 spec:
   containers:
@@ -3369,7 +3369,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '132507'
     drift.scheduler/relative-duration: '10748'
-  name: pod-125-cyclegan[2]-125
+  name: openb-pod-0125
   namespace: paib-gpu
 spec:
   containers:
@@ -3394,7 +3394,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '136268'
     drift.scheduler/relative-duration: '5623'
-  name: pod-126-openfoam[1]-126
+  name: openb-pod-0126
   namespace: paib-gpu
 spec:
   containers:
@@ -3421,7 +3421,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '136954'
     drift.scheduler/relative-duration: '17722'
-  name: pod-127-cyclegan[1]-127
+  name: openb-pod-0127
   namespace: paib-gpu
 spec:
   containers:
@@ -3448,7 +3448,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '137041'
     drift.scheduler/relative-duration: '6597'
-  name: pod-128-vit[3]-128
+  name: openb-pod-0128
   namespace: paib-gpu
 spec:
   containers:
@@ -3475,7 +3475,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '137112'
     drift.scheduler/relative-duration: '5906'
-  name: pod-129-sage[7]-129
+  name: openb-pod-0129
   namespace: paib-gpu
 spec:
   containers:
@@ -3500,7 +3500,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '137216'
     drift.scheduler/relative-duration: '12925'
-  name: pod-130-openfoam[1]-130
+  name: openb-pod-0130
   namespace: paib-gpu
 spec:
   containers:
@@ -3527,7 +3527,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '141070'
     drift.scheduler/relative-duration: '7055'
-  name: pod-131-cyclegan[3]-131
+  name: openb-pod-0131
   namespace: paib-gpu
 spec:
   containers:
@@ -3554,7 +3554,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '142004'
     drift.scheduler/relative-duration: '3515'
-  name: pod-132-cyclegan[3]-132
+  name: openb-pod-0132
   namespace: paib-gpu
 spec:
   containers:
@@ -3581,7 +3581,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '144184'
     drift.scheduler/relative-duration: '15303'
-  name: pod-133-seq[0]-133
+  name: openb-pod-0133
   namespace: paib-gpu
 spec:
   containers:
@@ -3606,7 +3606,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '144408'
     drift.scheduler/relative-duration: '7055'
-  name: pod-134-cyclegan[5]-134
+  name: openb-pod-0134
   namespace: paib-gpu
 spec:
   containers:
@@ -3633,7 +3633,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '144770'
     drift.scheduler/relative-duration: '251812'
-  name: pod-135-cyclegan[4]-135
+  name: openb-pod-0135
   namespace: paib-gpu
 spec:
   containers:
@@ -3660,7 +3660,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '146183'
     drift.scheduler/relative-duration: '6867'
-  name: pod-136-openfoam[3]-136
+  name: openb-pod-0136
   namespace: paib-gpu
 spec:
   containers:
@@ -3687,7 +3687,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '148894'
     drift.scheduler/relative-duration: '21501'
-  name: pod-137-cyclegan[3]-137
+  name: openb-pod-0137
   namespace: paib-gpu
 spec:
   containers:
@@ -3714,7 +3714,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '149394'
     drift.scheduler/relative-duration: '20861'
-  name: pod-138-cyclegan[3]-138
+  name: openb-pod-0138
   namespace: paib-gpu
 spec:
   containers:
@@ -3741,7 +3741,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '149474'
     drift.scheduler/relative-duration: '4423'
-  name: pod-139-cyclegan[4]-139
+  name: openb-pod-0139
   namespace: paib-gpu
 spec:
   containers:
@@ -3768,7 +3768,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '151869'
     drift.scheduler/relative-duration: '20936'
-  name: pod-140-cyclegan[2]-140
+  name: openb-pod-0140
   namespace: paib-gpu
 spec:
   containers:
@@ -3795,7 +3795,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '152282'
     drift.scheduler/relative-duration: '8231'
-  name: pod-141-cyclegan[3]-141
+  name: openb-pod-0141
   namespace: paib-gpu
 spec:
   containers:
@@ -3822,7 +3822,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '153903'
     drift.scheduler/relative-duration: '39596'
-  name: pod-142-vit[1]-142
+  name: openb-pod-0142
   namespace: paib-gpu
 spec:
   containers:
@@ -3849,7 +3849,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '154109'
     drift.scheduler/relative-duration: '142032'
-  name: pod-143-vit[1]-143
+  name: openb-pod-0143
   namespace: paib-gpu
 spec:
   containers:
@@ -3876,7 +3876,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '155534'
     drift.scheduler/relative-duration: '370738'
-  name: pod-144-openfoam[3]-144
+  name: openb-pod-0144
   namespace: paib-gpu
 spec:
   containers:
@@ -3903,7 +3903,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '157744'
     drift.scheduler/relative-duration: '9426'
-  name: pod-145-gcn[1]-145
+  name: openb-pod-0145
   namespace: paib-gpu
 spec:
   containers:
@@ -3930,7 +3930,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '159303'
     drift.scheduler/relative-duration: '31476'
-  name: pod-146-cyclegan[2]-146
+  name: openb-pod-0146
   namespace: paib-gpu
 spec:
   containers:
@@ -3957,7 +3957,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '159837'
     drift.scheduler/relative-duration: '40659'
-  name: pod-147-cyclegan[3]-147
+  name: openb-pod-0147
   namespace: paib-gpu
 spec:
   containers:
@@ -3984,7 +3984,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '161393'
     drift.scheduler/relative-duration: '19032'
-  name: pod-148-a3c[0]-148
+  name: openb-pod-0148
   namespace: paib-gpu
 spec:
   containers:
@@ -4011,7 +4011,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '161573'
     drift.scheduler/relative-duration: '13302'
-  name: pod-149-a3c[0]-149
+  name: openb-pod-0149
   namespace: paib-gpu
 spec:
   containers:
@@ -4038,7 +4038,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '162025'
     drift.scheduler/relative-duration: '14447'
-  name: pod-150-cyclegan[4]-150
+  name: openb-pod-0150
   namespace: paib-gpu
 spec:
   containers:
@@ -4065,7 +4065,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '162678'
     drift.scheduler/relative-duration: '3114'
-  name: pod-151-openfoam[3]-151
+  name: openb-pod-0151
   namespace: paib-gpu
 spec:
   containers:
@@ -4092,7 +4092,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '165195'
     drift.scheduler/relative-duration: '2211'
-  name: pod-152-cyclegan[3]-152
+  name: openb-pod-0152
   namespace: paib-gpu
 spec:
   containers:
@@ -4119,7 +4119,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '165395'
     drift.scheduler/relative-duration: '2673'
-  name: pod-153-vit[1]-153
+  name: openb-pod-0153
   namespace: paib-gpu
 spec:
   containers:
@@ -4146,7 +4146,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '167941'
     drift.scheduler/relative-duration: '90636'
-  name: pod-154-vit[1]-154
+  name: openb-pod-0154
   namespace: paib-gpu
 spec:
   containers:
@@ -4173,7 +4173,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '169866'
     drift.scheduler/relative-duration: '34709'
-  name: pod-155-vit[1]-155
+  name: openb-pod-0155
   namespace: paib-gpu
 spec:
   containers:
@@ -4200,7 +4200,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '174141'
     drift.scheduler/relative-duration: '34999'
-  name: pod-156-vit[1]-156
+  name: openb-pod-0156
   namespace: paib-gpu
 spec:
   containers:
@@ -4227,7 +4227,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '174691'
     drift.scheduler/relative-duration: '34074'
-  name: pod-157-gcn[0]-157
+  name: openb-pod-0157
   namespace: paib-gpu
 spec:
   containers:
@@ -4254,7 +4254,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '174966'
     drift.scheduler/relative-duration: '227629'
-  name: pod-158-openfoam[3]-158
+  name: openb-pod-0158
   namespace: paib-gpu
 spec:
   containers:
@@ -4281,7 +4281,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '175296'
     drift.scheduler/relative-duration: '2150'
-  name: pod-159-openfoam[3]-159
+  name: openb-pod-0159
   namespace: paib-gpu
 spec:
   containers:
@@ -4308,7 +4308,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '177407'
     drift.scheduler/relative-duration: '11095'
-  name: pod-160-vit[1]-160
+  name: openb-pod-0160
   namespace: paib-gpu
 spec:
   containers:
@@ -4333,7 +4333,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '181438'
     drift.scheduler/relative-duration: '2743'
-  name: pod-161-cyclegan[5]-161
+  name: openb-pod-0161
   namespace: paib-gpu
 spec:
   containers:
@@ -4360,7 +4360,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '182878'
     drift.scheduler/relative-duration: '47862'
-  name: pod-162-gcn[1]-162
+  name: openb-pod-0162
   namespace: paib-gpu
 spec:
   containers:
@@ -4387,7 +4387,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '183669'
     drift.scheduler/relative-duration: '5814'
-  name: pod-163-cyclegan[3]-163
+  name: openb-pod-0163
   namespace: paib-gpu
 spec:
   containers:
@@ -4412,7 +4412,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '184075'
     drift.scheduler/relative-duration: '33131'
-  name: pod-164-openfoam[1]-164
+  name: openb-pod-0164
   namespace: paib-gpu
 spec:
   containers:
@@ -4439,7 +4439,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '186227'
     drift.scheduler/relative-duration: '3530'
-  name: pod-165-cyclegan[2]-165
+  name: openb-pod-0165
   namespace: paib-gpu
 spec:
   containers:
@@ -4466,7 +4466,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '188696'
     drift.scheduler/relative-duration: '15926'
-  name: pod-166-cyclegan[1]-166
+  name: openb-pod-0166
   namespace: paib-gpu
 spec:
   containers:
@@ -4493,7 +4493,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '188812'
     drift.scheduler/relative-duration: '7391'
-  name: pod-167-cyclegan[4]-167
+  name: openb-pod-0167
   namespace: paib-gpu
 spec:
   containers:
@@ -4520,7 +4520,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '189104'
     drift.scheduler/relative-duration: '7466'
-  name: pod-168-vit[1]-168
+  name: openb-pod-0168
   namespace: paib-gpu
 spec:
   containers:
@@ -4545,7 +4545,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '191243'
     drift.scheduler/relative-duration: '8044'
-  name: pod-169-cyclegan[6]-169
+  name: openb-pod-0169
   namespace: paib-gpu
 spec:
   containers:
@@ -4572,7 +4572,7 @@ metadata:
     alibabacloud.com/gpu-milli: '600'
     drift.scheduler/relative-creation-time: '193506'
     drift.scheduler/relative-duration: '10681'
-  name: pod-170-gpt2[2]-170
+  name: openb-pod-0170
   namespace: paib-gpu
 spec:
   containers:
@@ -4599,7 +4599,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '193959'
     drift.scheduler/relative-duration: '155232'
-  name: pod-171-gpt2[2]-171
+  name: openb-pod-0171
   namespace: paib-gpu
 spec:
   containers:
@@ -4626,7 +4626,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '194352'
     drift.scheduler/relative-duration: '3304'
-  name: pod-172-cyclegan[3]-172
+  name: openb-pod-0172
   namespace: paib-gpu
 spec:
   containers:
@@ -4653,7 +4653,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '195028'
     drift.scheduler/relative-duration: '25841'
-  name: pod-173-gcn[0]-173
+  name: openb-pod-0173
   namespace: paib-gpu
 spec:
   containers:
@@ -4680,7 +4680,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '195959'
     drift.scheduler/relative-duration: '11318'
-  name: pod-174-a3c[0]-174
+  name: openb-pod-0174
   namespace: paib-gpu
 spec:
   containers:
@@ -4705,7 +4705,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '196079'
     drift.scheduler/relative-duration: '17481'
-  name: pod-175-cyclegan[6]-175
+  name: openb-pod-0175
   namespace: paib-gpu
 spec:
   containers:
@@ -4730,7 +4730,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '198255'
     drift.scheduler/relative-duration: '84621'
-  name: pod-176-cyclegan[6]-176
+  name: openb-pod-0176
   namespace: paib-gpu
 spec:
   containers:
@@ -4757,7 +4757,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '199174'
     drift.scheduler/relative-duration: '25141'
-  name: pod-177-seq[2]-177
+  name: openb-pod-0177
   namespace: paib-gpu
 spec:
   containers:
@@ -4784,7 +4784,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '200963'
     drift.scheduler/relative-duration: '197426'
-  name: pod-178-vit[1]-178
+  name: openb-pod-0178
   namespace: paib-gpu
 spec:
   containers:
@@ -4809,7 +4809,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '201278'
     drift.scheduler/relative-duration: '22725'
-  name: pod-179-cyclegan[6]-179
+  name: openb-pod-0179
   namespace: paib-gpu
 spec:
   containers:
@@ -4836,7 +4836,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '205311'
     drift.scheduler/relative-duration: '4777'
-  name: pod-180-cyclegan[1]-180
+  name: openb-pod-0180
   namespace: paib-gpu
 spec:
   containers:
@@ -4863,7 +4863,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '206980'
     drift.scheduler/relative-duration: '14340'
-  name: pod-181-a3c[0]-181
+  name: openb-pod-0181
   namespace: paib-gpu
 spec:
   containers:
@@ -4890,7 +4890,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '207484'
     drift.scheduler/relative-duration: '4232'
-  name: pod-182-cyclegan[3]-182
+  name: openb-pod-0182
   namespace: paib-gpu
 spec:
   containers:
@@ -4915,7 +4915,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '211044'
     drift.scheduler/relative-duration: '51084'
-  name: pod-183-openfoam[4]-183
+  name: openb-pod-0183
   namespace: paib-gpu
 spec:
   containers:
@@ -4942,7 +4942,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '212491'
     drift.scheduler/relative-duration: '21684'
-  name: pod-184-cyclegan[4]-184
+  name: openb-pod-0184
   namespace: paib-gpu
 spec:
   containers:
@@ -4967,7 +4967,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '214694'
     drift.scheduler/relative-duration: '36191'
-  name: pod-185-cyclegan[6]-185
+  name: openb-pod-0185
   namespace: paib-gpu
 spec:
   containers:
@@ -4992,7 +4992,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '214750'
     drift.scheduler/relative-duration: '4774'
-  name: pod-186-cyclegan[6]-186
+  name: openb-pod-0186
   namespace: paib-gpu
 spec:
   containers:
@@ -5017,7 +5017,7 @@ metadata:
   annotations:
     drift.scheduler/relative-creation-time: '214819'
     drift.scheduler/relative-duration: '2055'
-  name: pod-187-cyclegan[6]-187
+  name: openb-pod-0187
   namespace: paib-gpu
 spec:
   containers:
@@ -5044,7 +5044,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '216448'
     drift.scheduler/relative-duration: '7116'
-  name: pod-188-gcn[1]-188
+  name: openb-pod-0188
   namespace: paib-gpu
 spec:
   containers:
@@ -5071,7 +5071,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '216884'
     drift.scheduler/relative-duration: '6589'
-  name: pod-189-cyclegan[1]-189
+  name: openb-pod-0189
   namespace: paib-gpu
 spec:
   containers:
@@ -5098,7 +5098,7 @@ metadata:
     alibabacloud.com/gpu-milli: '400'
     drift.scheduler/relative-creation-time: '217757'
     drift.scheduler/relative-duration: '27507'
-  name: pod-190-seq[1]-190
+  name: openb-pod-0190
   namespace: paib-gpu
 spec:
   containers:
@@ -5125,7 +5125,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '217961'
     drift.scheduler/relative-duration: '58207'
-  name: pod-191-cyclegan[3]-191
+  name: openb-pod-0191
   namespace: paib-gpu
 spec:
   containers:
@@ -5152,7 +5152,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '222538'
     drift.scheduler/relative-duration: '15019'
-  name: pod-192-cyclegan[3]-192
+  name: openb-pod-0192
   namespace: paib-gpu
 spec:
   containers:
@@ -5179,7 +5179,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '223377'
     drift.scheduler/relative-duration: '33889'
-  name: pod-193-cyclegan[3]-193
+  name: openb-pod-0193
   namespace: paib-gpu
 spec:
   containers:
@@ -5206,7 +5206,7 @@ metadata:
     alibabacloud.com/gpu-milli: '700'
     drift.scheduler/relative-creation-time: '225496'
     drift.scheduler/relative-duration: '216407'
-  name: pod-194-cyclegan[3]-194
+  name: openb-pod-0194
   namespace: paib-gpu
 spec:
   containers:
@@ -5233,7 +5233,7 @@ metadata:
     alibabacloud.com/gpu-milli: '800'
     drift.scheduler/relative-creation-time: '225588'
     drift.scheduler/relative-duration: '22867'
-  name: pod-195-cyclegan[3]-195
+  name: openb-pod-0195
   namespace: paib-gpu
 spec:
   containers:
@@ -5260,7 +5260,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '226371'
     drift.scheduler/relative-duration: '150804'
-  name: pod-196-vit[2]-196
+  name: openb-pod-0196
   namespace: paib-gpu
 spec:
   containers:
@@ -5287,7 +5287,7 @@ metadata:
     alibabacloud.com/gpu-milli: '1000'
     drift.scheduler/relative-creation-time: '226448'
     drift.scheduler/relative-duration: '52304'
-  name: pod-197-cyclegan[1]-197
+  name: openb-pod-0197
   namespace: paib-gpu
 spec:
   containers:
@@ -5314,7 +5314,7 @@ metadata:
     alibabacloud.com/gpu-milli: '500'
     drift.scheduler/relative-creation-time: '229035'
     drift.scheduler/relative-duration: '4193'
-  name: pod-198-gcn[1]-198
+  name: openb-pod-0198
   namespace: paib-gpu
 spec:
   containers:
@@ -5341,7 +5341,7 @@ metadata:
     alibabacloud.com/gpu-milli: '900'
     drift.scheduler/relative-creation-time: '229743'
     drift.scheduler/relative-duration: '22629'
-  name: pod-199-cyclegan[3]-199
+  name: openb-pod-0199
   namespace: paib-gpu
 spec:
   containers:
