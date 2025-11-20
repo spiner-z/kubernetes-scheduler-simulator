@@ -1054,6 +1054,8 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 
 	sim.simulationEndTime = lastTime
 
+	sim.displayLoggedInfo()
+
 	// 2.7 计算平均利用率（CPU / GPU）
 	totalDurationSec := sim.simulationEndTime.Sub(sim.simulationStartTime).Seconds()
 	log.Infof("Simulation start at %s, finish at %s", sim.simulationStartTime, sim.simulationEndTime)
@@ -1070,8 +1072,6 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 		log.Warnf("Long-term scheduling utilization: insufficient data (totalDurationSec=%.2f, cpu=%d, gpu=%d)",
 			totalDurationSec, sim.nodeTotalMilliCpu, sim.nodeTotalMilliGpu)
 	}
-
-	sim.displayLoggedInfo()
 
 	return failedPods, nil
 }
@@ -1093,8 +1093,10 @@ func (sim *Simulator) addStageUtilizationReport(currentTime time.Time) {
 	if totalDurationSec > 0 && sim.nodeTotalMilliCpu > 0 && sim.nodeTotalMilliGpu > 0 {
 		cpuUtil := sim.cpuUsageTime / (float64(sim.nodeTotalMilliCpu) * totalDurationSec) * 100
 		gpuUtil := sim.gpuUsageTime / (float64(sim.nodeTotalMilliGpu) * totalDurationSec) * 100
-		sim.addLoggedInfo(StageUtilizationLogging, fmt.Sprintf("CPU=%.2f%%, GPU=%.2f%%, duration=%.2fs",
-			cpuUtil, gpuUtil, totalDurationSec))
+		allocatedCpuUtil := sim.cpuUsageTime / sim.allocatedCpuUsageTime * 100
+		allocatedGpuUtil := sim.gpuUsageTime / sim.allocatedGpuUsageTime * 100
+		sim.addLoggedInfo(StageUtilizationLogging, fmt.Sprintf("CPU=%.2f%%, %.2f%%; GPU=%.2f%%, %.2f%%; duration=%.2fs",
+			cpuUtil, allocatedCpuUtil, gpuUtil, allocatedGpuUtil, totalDurationSec))
 	}
 }
 
