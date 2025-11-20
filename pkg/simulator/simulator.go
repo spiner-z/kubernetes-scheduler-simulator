@@ -65,20 +65,22 @@ type Simulator struct {
 	nodeTotalMilliCpu   int64
 	nodeTotalMilliGpu   int64
 
-	// ===== 新增：长期调度时的利用率统计 =====
-	// 累计使用量 * 时间 (单位：mCPU * 秒, mGPU * 秒)
-	cpuUsageTime float64
-	gpuUsageTime float64
-
-	// 模拟时间范围
-	simulationStartTime time.Time
-	simulationEndTime   time.Time
-
 	// 绝对时间起点
 	absStartTime time.Time
 
 	// 信息收集，用于日志记录
 	loggedInfo map[string][]string
+
+	// ===== 长期调度时的利用率统计 =====
+	// 累计使用量 * 时间 (单位：mCPU * 秒, mGPU * 秒)
+	cpuUsageTime float64
+	gpuUsageTime float64
+	// 非空闲节点的累计使用量 * 时间
+	allocatedCpuUsageTime float64
+	allocatedGpuUsageTime float64
+	// 模拟时间范围
+	simulationStartTime time.Time
+	simulationEndTime   time.Time
 }
 
 const (
@@ -903,6 +905,7 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 			if intervalSec > 0 {
 				sim.cpuUsageTime += float64(currentCpuUsed) * intervalSec
 				sim.gpuUsageTime += float64(currentGpuUsed) * intervalSec
+				sim.updateAllocatedResourceUsageTime(intervalSec)
 			}
 			lastTime = nextTime
 		}
@@ -1059,6 +1062,10 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 		gpuUtil := sim.gpuUsageTime / (float64(sim.nodeTotalMilliGpu) * totalDurationSec) * 100
 		log.Infof("Long-term scheduling utilization: CPU=%.2f%%, GPU=%.2f%%, duration=%.2fs",
 			cpuUtil, gpuUtil, totalDurationSec)
+		log.Infof("Allocated resource utilization: CPU=%.2f%%, GPU=%.2f%%, duration=%.2fs",
+			sim.cpuUsageTime/sim.allocatedCpuUsageTime*100,
+			sim.gpuUsageTime/sim.allocatedGpuUsageTime*100,
+			totalDurationSec)
 	} else {
 		log.Warnf("Long-term scheduling utilization: insufficient data (totalDurationSec=%.2f, cpu=%d, gpu=%d)",
 			totalDurationSec, sim.nodeTotalMilliCpu, sim.nodeTotalMilliGpu)
@@ -1067,6 +1074,18 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 	sim.displayLoggedInfo()
 
 	return failedPods, nil
+}
+
+func (sim *Simulator) updateAllocatedResourceUsageTime(intervalSec float64) {
+	nodeStatusList := sim.GetClusterNodeStatus()
+	for _, nodeStatus := range nodeStatusList {
+		if len(nodeStatus.Pods) == 0 {
+			continue
+		}
+		node := nodeStatus.Node
+		sim.allocatedCpuUsageTime += float64(node.Status.Capacity.Cpu().MilliValue()) * intervalSec
+		sim.allocatedGpuUsageTime += float64(gpushareutils.GetGpuMilliOfNode(node)) * intervalSec
+	}
 }
 
 func (sim *Simulator) addStageUtilizationReport(currentTime time.Time) {
