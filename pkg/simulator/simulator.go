@@ -206,7 +206,7 @@ func New(opts ...Option) (Interface, error) {
 		absStartTime:    absStartTime,
 	}
 
-	sim.enableReschedule = false
+	sim.enableReschedule = true
 	sim.reschedulePolicy = "drain"
 	sim.reschedInterval = 3600 * time.Second
 
