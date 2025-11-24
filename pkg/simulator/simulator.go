@@ -81,6 +81,11 @@ type Simulator struct {
 	// 模拟时间范围
 	simulationStartTime time.Time
 	simulationEndTime   time.Time
+
+	// 重调度
+	enableReschedule bool
+	reschedulePolicy string
+	reschedInterval  time.Duration
 }
 
 const (
@@ -200,6 +205,10 @@ func New(opts ...Option) (Interface, error) {
 		customConfig:    options.customConfig,
 		absStartTime:    absStartTime,
 	}
+
+	sim.enableReschedule = false
+	sim.reschedulePolicy = "drain"
+	sim.reschedInterval = 3600 * time.Second
 
 	// create a scheduler
 	bindRegistry := frameworkruntime.Registry{
@@ -812,6 +821,10 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 	}
 	sim.simulationStartTime = startTime
 	currentTime := startTime
+	var nextReschedTime time.Time
+	if sim.enableReschedule {
+		nextReschedTime = currentTime.Add(sim.reschedInterval)
+	}
 
 	// 用于积分的“上一个时间点”
 	lastTime := currentTime
@@ -873,26 +886,45 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 		// 决定下一个事件时间 & 类型
 		var nextTime time.Time
 		const (
-			eventArrival = 1
-			eventFinish  = 2
+			eventArrival    = 1
+			eventFinish     = 2
+			eventReschedule = 3
 		)
 		var eventType int
 
-		switch {
-		case nextArrivalTime != nil && nextFinishTime != nil:
-			if nextArrivalTime.Before(*nextFinishTime) || nextArrivalTime.Equal(*nextFinishTime) {
+		if sim.enableReschedule {
+			// 1. 先假设下一个事件是重调度
+			nextTime = nextReschedTime
+			eventType = eventReschedule
+
+			// 2. arrival 更早
+			if nextArrivalTime != nil && (nextArrivalTime.Before(nextTime) || nextArrivalTime.Equal(nextTime)) {
 				nextTime = *nextArrivalTime
 				eventType = eventArrival
-			} else {
+			}
+
+			// 3. finish 更早
+			if nextFinishTime != nil && (nextFinishTime.Before(nextTime) || nextFinishTime.Equal(nextTime)) {
 				nextTime = *nextFinishTime
 				eventType = eventFinish
 			}
-		case nextArrivalTime != nil:
-			nextTime = *nextArrivalTime
-			eventType = eventArrival
-		case nextFinishTime != nil:
-			nextTime = *nextFinishTime
-			eventType = eventFinish
+		} else {
+			switch {
+			case nextArrivalTime != nil && nextFinishTime != nil:
+				if nextArrivalTime.Before(*nextFinishTime) || nextArrivalTime.Equal(*nextFinishTime) {
+					nextTime = *nextArrivalTime
+					eventType = eventArrival
+				} else {
+					nextTime = *nextFinishTime
+					eventType = eventFinish
+				}
+			case nextArrivalTime != nil:
+				nextTime = *nextArrivalTime
+				eventType = eventArrival
+			case nextFinishTime != nil:
+				nextTime = *nextFinishTime
+				eventType = eventFinish
+			}
 		}
 
 		if nextTime.Before(currentTime) {
@@ -953,6 +985,85 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 
 				//（可选）每次删除后输出一下碎片信息
 				// sim.ClusterGpuFragReport()
+			}
+		case eventReschedule:
+			// 周期性重调度：把当前所有 running pod 放回 pending，并更新剩余运行时间
+			log.Infof("time=%s: start periodic reschedule, running pods=%d",
+				currentTime.Format(time.RFC3339), h.Len())
+			// 用一个临时 slice 存放被抢占的“剩余任务”
+			newPendingFromRunning := make([]*corev1.Pod, 0, h.Len())
+
+			for h.Len() > 0 {
+				info := heap.Pop(h).(*runningPodInfo)
+
+				// 计算剩余运行时间
+				if !info.finishTime.After(currentTime) {
+					// 理论上这种情况应该在 eventFinish 事件中处理掉了
+					// 这里兜底：当作立即完成
+					cpuReq, gpuReq := getPodResourceUsage(info.pod)
+					currentCpuUsed -= cpuReq
+					currentGpuUsed -= gpuReq
+
+					if err := sim.deletePod(info.pod); err != nil {
+						log.Errorf("deletePod(%s) in reschedule-finish err: %v",
+							utils.GeneratePodKey(info.pod), err)
+					}
+					continue
+				}
+
+				remainDur := info.finishTime.Sub(currentTime)
+				remainSec := int64(remainDur.Seconds())
+				if remainSec <= 0 {
+					// 非常极端的边界，直接当完成处理
+					cpuReq, gpuReq := getPodResourceUsage(info.pod)
+					currentCpuUsed -= cpuReq
+					currentGpuUsed -= gpuReq
+
+					if err := sim.deletePod(info.pod); err != nil {
+						log.Errorf("deletePod(%s) in reschedule-remain<=0 err: %v",
+							utils.GeneratePodKey(info.pod), err)
+					}
+					continue
+				}
+
+				// 1) 删除当前 running pod，释放资源
+				cpuReq, gpuReq := getPodResourceUsage(info.pod)
+				currentCpuUsed -= cpuReq
+				currentGpuUsed -= gpuReq
+
+				if err := sim.deletePod(info.pod); err != nil {
+					log.Errorf("deletePod(%s) in reschedule-preempt err: %v",
+						utils.GeneratePodKey(info.pod), err)
+				}
+
+				// 2) 构造新的“剩余任务 pod”：去掉 NodeName / 状态，重新作为待调度 pod
+				newPod := MakePodUnassigned(info.pod.DeepCopy())
+				ClearPodUnscheduledAnno(newPod)
+
+				if newPod.Annotations == nil {
+					newPod.Annotations = map[string]string{}
+				}
+				// 更新剩余 duration，后续调度时会通过 getPodRelativeDuration 读取
+				newPod.Annotations[gpushareutils.RelativeDuration] = strconv.FormatInt(remainSec, 10)
+
+				// 如果你希望重调度后相当于“刚刚到达”，也可以更新 RelativeCreationTime：
+				// relSec := int64(currentTime.Sub(sim.absStartTime).Seconds())
+				// newPod.Annotations[gpushareutils.RelativeCreationTime] = strconv.FormatInt(relSec, 10)
+
+				log.Infof("time=%s: preempt pod(%s), remain=%ds",
+					currentTime.Format(time.RFC3339),
+					utils.GeneratePodKey(newPod), remainSec)
+
+				newPendingFromRunning = append(newPendingFromRunning, newPod)
+			}
+
+			// 把被抢占的任务加入 pending 队列，后面统一尝试重新调度
+			if len(newPendingFromRunning) > 0 {
+				pending = append(pending, newPendingFromRunning...)
+			}
+
+			if sim.enableReschedule {
+				nextReschedTime = nextReschedTime.Add(sim.reschedInterval)
 			}
 		}
 
