@@ -14,7 +14,7 @@ import (
 	storagev1 "k8s.io/api/storage/v1"
 
 	"github.com/hkust-adsl/kubernetes-scheduler-simulator/pkg/api/v1alpha1"
-	"github.com/hkust-adsl/kubernetes-scheduler-simulator/pkg/type"
+	simontype "github.com/hkust-adsl/kubernetes-scheduler-simulator/pkg/type"
 	"github.com/hkust-adsl/kubernetes-scheduler-simulator/pkg/utils"
 )
 

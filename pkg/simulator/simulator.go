@@ -207,7 +207,7 @@ func New(opts ...Option) (Interface, error) {
 	}
 
 	sim.enableReschedule = true
-	sim.reschedulePolicy = "drain"
+	sim.reschedulePolicy = gpushareutils.ReschedulePolicyDrain
 	sim.reschedInterval = 3600 * time.Second
 
 	// create a scheduler
@@ -987,13 +987,20 @@ func (sim *Simulator) syncClusterResourceList(resourceList ResourceTypes) ([]sim
 				// sim.ClusterGpuFragReport()
 			}
 		case eventReschedule:
+			rescheduleRatio := sim.GetCustomConfig().WorkloadInflationConfig.Ratio
 			// 周期性重调度：把当前所有 running pod 放回 pending，并更新剩余运行时间
-			log.Infof("time=%s: start periodic reschedule, running pods=%d",
-				currentTime.Format(time.RFC3339), h.Len())
+			log.Infof("time=%s: start periodic reschedule, running pods=%d, reschedule ratio=%.2f",
+				currentTime.Format(time.RFC3339), h.Len(), rescheduleRatio)
 			// 用一个临时 slice 存放被抢占的“剩余任务”
 			newPendingFromRunning := make([]*corev1.Pod, 0, h.Len())
 
-			for h.Len() > 0 {
+			totalCount := h.Len()
+			preemptCount := int(float64(totalCount) * rescheduleRatio)
+			if preemptCount <= 0 || preemptCount > totalCount {
+				preemptCount = totalCount
+			}
+
+			for i := 0; i < preemptCount; i++ {
 				info := heap.Pop(h).(*runningPodInfo)
 
 				// 计算剩余运行时间
@@ -1678,6 +1685,10 @@ func displaySchedulerConfig(config *config.CompletedConfig) {
 
 // TunePodsByNodeTotalResource prune or append pods to match the cfg.Ratio * (cluster_GPU_capacity)
 func (sim *Simulator) TunePodsByNodeTotalResource(pods []*corev1.Pod, cfg v1alpha1.WorkloadTuningConfig) []*corev1.Pod {
+	if sim.enableReschedule {
+		log.Infof("[Tune] Skip Tuning Pods when Reschedule is enabled\n")
+		return pods
+	}
 	if sim.podTotalMilliCpuReq <= 0 {
 		panic("sim.podTotalMilliCpuReq <= 0")
 	} else if sim.podTotalMilliGpuReq <= 0 {

@@ -19,6 +19,8 @@ const (
 	MaxSpecGpu  = 8000    // GPU MILLI
 	NoGpuTag    = "no-gpu"
 	ShareGpuTag = "share-gpu"
+
+	ReschedulePolicyDrain = "drain"
 )
 
 var MapGpuTypeMemoryMiB = map[string]int64{
