@@ -67,7 +67,7 @@ for type, file in FILEDICT.items():
     dfnp.sc_policy = dfnp.sc_policy.apply(lambda x: POLICY_ABBR_DICT.get(x, x))
     dfp_dict[type] = dfnp
 
-policy_keep = ['FGD', 'BestFit', 'Packing', 'Clustering', 'DotProd', 'Random']
+policy_keep = ['Random', 'Tetris', 'Synergy', 'MLaaS', 'Eva', 'DRIFT']
 
 # ['alloc', 'frag_amount', 'frag_ratio']
 dfnp = dfp_dict['alloc']

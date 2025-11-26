@@ -13,11 +13,11 @@ TAG_SNAKE_LIST = [camel_to_snake(x) for x in TAG_LIST]
 
 POLICY_ABBR_DICT = {
     '01-Random':        'Random',
-    '02-DotProd':       'DotProd',
-    '03-GpuClustering': 'Clustering',
-    '04-GpuPacking':    'Packing',
-    '05-BestFit':       'BestFit',
-    '06-FGD':           'FGD',
+    '02-DotProd':       'Tetris',
+    '03-GpuClustering': 'Synergy',
+    '04-GpuPacking':    'MLaaS',
+    '05-BestFit':       'Eva',
+    '06-FGD':           'DRIFT',
 }
 
 def move_tag_to_new_column(df, tag_list=TAG_SNAKE_LIST):
