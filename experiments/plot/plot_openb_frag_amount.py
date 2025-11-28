@@ -17,6 +17,27 @@ workload = 'openb_pod_list_default'
 
 matplotlib.rcdefaults()
 matplotlib.rcParams['pdf.fonttype'] = 42
+
+# ---- 自动选择一个可用的中文字体 ----
+from matplotlib import font_manager
+candidate_fonts = [
+    "Noto Sans CJK SC",    # Ubuntu 推荐： apt install fonts-noto-cjk
+    "WenQuanYi Micro Hei", # fonts-wqy-microhei
+    "WenQuanYi Zen Hei",
+    "SimHei",              # Windows 常见
+    "Microsoft YaHei",
+]
+available = {f.name for f in font_manager.fontManager.ttflist}
+for fname in candidate_fonts:
+    if fname in available:
+        matplotlib.rcParams["font.family"] = fname
+        print("Use Chinese font:", fname)
+        break
+else:
+    print("Warning: No known Chinese font found, Chinese may show as squares.")
+# 避免负号变成方块
+matplotlib.rcParams["axes.unicode_minus"] = False
+
 if PAPER_PLOT:
     matplotlib.rcParams.update({"font.size": 24}) # for 24 for (8,6), 16 for (4,3)
     matplotlib.rcParams['lines.linewidth'] = 4 # 2.5
@@ -83,8 +104,8 @@ if TYPE=='frag_amount':
     plt.grid(linestyle='-.', alpha=0.8)
     plt.legend(ncol=3)
     # plt.ylabel('GPU Fragment (%)')
-    plt.ylabel('Frag / Total (%)')
-    plt.xlabel('Arrived workloads (in % of cluster GPU capacity)')
+    plt.ylabel('碎片资源量 / 总资源量 (%)')
+    plt.xlabel('到达工作负载占集群资源容量的百分比 (%)')
     plt.xlim(0, None)
     plt.ylim(0, 20)
     # plt.title("%s" % (workload))
@@ -110,9 +131,9 @@ elif TYPE=='frag_ratio':
                 style_order=policy_keepr, palette=colors)
     plt.grid(linestyle='-.', alpha=0.8)
     plt.legend(ncol=3)
-    plt.xlabel('Arrived workloads (in % of cluster GPU capacity)')
+    plt.xlabel('到达工作负载占集群资源容量的百分比 (%)')
     # plt.ylabel('Fragment ratio (%)')
-    plt.ylabel('Frag Rate (%)')
+    plt.ylabel('碎片率 (%)')
     plt.xlim(0, None)
     plt.ylim(0, 105)
     # plt.title("%s" % (workload))

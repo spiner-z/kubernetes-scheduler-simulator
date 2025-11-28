@@ -118,13 +118,13 @@ if TYPE=='alloc':
     # plt.axvline(95, linestyle='--', color='gray', alpha=0.8)
 
     plt.grid(linestyle='-.', alpha=0.8)
-    plt.xlabel('Arrived Workload (in Percentage of Cluster GPU Capacity)')
+    plt.xlabel('到达工作负载占集群资源容量的百分比 (%)')
     # plt.title("%s" % (workload))
     # plt.show()
 
     if PAPER_PLOT:
-        plt.ylabel('Unalloc. GPU (%)')
-        plt.xlabel('Arrived workloads (in % of cluster GPU capacity)')
+        plt.ylabel('未分配资源比例 (%)')
+        plt.xlabel('到达工作负载占集群资源容量的百分比 (%)')
         plt.legend(loc='upper left', bbox_to_anchor=(1, 1.05), 
             prop={'size': 20}, frameon=False, borderpad=0)
         yhead = 25
@@ -132,7 +132,7 @@ if TYPE=='alloc':
         plt.ylim(0, yhead)
         plt.yticks([0,5,10,15,20,25])
     else:
-        plt.ylabel('Unallocated GPU (%)')
+        plt.ylabel('未分配资源比例 (%)')
         plt.legend(ncol=3)
         yhead = 20
         plt.xlim(100-yhead, None)
