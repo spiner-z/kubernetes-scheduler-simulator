@@ -1,5 +1,14 @@
 
 # %%
+
+# 下载中文字体（ubuntu）
+# sudo apt update
+# sudo apt-get install fonts-noto-cjk
+# sudo apt-get install fonts-wqy-microhei
+
+# 安装完成后清理缓存
+# rm -rf ~/.cache/matplotlib
+
 import matplotlib
 import pandas as pd
 import seaborn as sns
@@ -16,6 +25,27 @@ workload = 'openb_pod_list_default'
 
 matplotlib.rcdefaults()
 matplotlib.rcParams['pdf.fonttype'] = 42
+
+# ---- 自动选择一个可用的中文字体 ----
+from matplotlib import font_manager
+candidate_fonts = [
+    "Noto Sans CJK SC",    # Ubuntu 推荐： apt install fonts-noto-cjk
+    "WenQuanYi Micro Hei", # fonts-wqy-microhei
+    "WenQuanYi Zen Hei",
+    "SimHei",              # Windows 常见
+    "Microsoft YaHei",
+]
+available = {f.name for f in font_manager.fontManager.ttflist}
+for fname in candidate_fonts:
+    if fname in available:
+        matplotlib.rcParams["font.family"] = fname
+        print("Use Chinese font:", fname)
+        break
+else:
+    print("Warning: No known Chinese font found, Chinese may show as squares.")
+# 避免负号变成方块
+matplotlib.rcParams["axes.unicode_minus"] = False
+
 if PAPER_PLOT:
     matplotlib.rcParams.update({"font.size": 24}) # for 24 for (8,6), 16 for (4,3)
     matplotlib.rcParams['lines.linewidth'] = 4 # 2.5
