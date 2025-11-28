@@ -104,7 +104,7 @@ if TYPE=='frag_amount':
     plt.grid(linestyle='-.', alpha=0.8)
     plt.legend(ncol=3)
     # plt.ylabel('GPU Fragment (%)')
-    plt.ylabel('碎片资源量 / 总资源量 (%)')
+    plt.ylabel('碎片资源占比 (%)')
     plt.xlabel('到达工作负载占集群资源容量的百分比 (%)')
     plt.xlim(0, None)
     plt.ylim(0, 20)
