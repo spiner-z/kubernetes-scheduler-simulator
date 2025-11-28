@@ -114,7 +114,7 @@ if TYPE=='alloc':
     style='sc_policy', estimator='median', errorbar=("pi", 50), 
     hue_order=policy_keep, style_order=policy_keepr, palette=colors)
 
-    plt.plot([0, 100], [100, 0], label='Ideal', linestyle=':', color='grey', alpha=0.8)
+    # plt.plot([0, 100], [100, 0], label='Ideal', linestyle=':', color='grey', alpha=0.8)
     # plt.axvline(95, linestyle='--', color='gray', alpha=0.8)
 
     plt.grid(linestyle='-.', alpha=0.8)
